@@ -12,10 +12,17 @@ import { RouterLink } from '../../routes/components/RouterLink';
 export const Logo = forwardRef((props, ref) => {
   const { className, href = '/', isSingle = true, disabled, sx, ...other } = props;
   const singleLogo = (
-    <img alt="Single logo" src="/logo/linlanga.png" width="100%" height="100%" />
+    <img alt="Lin Universe" src="/logo/linuniverse.png" width="100%" height="100%" />
   );
 
-  const fullLogo = <img alt="Full logo" src="/logo/linlanga_full.png" width="100%" height="100%" />;
+  const fullLogo = (
+    <img
+      alt="Lin Universe"
+      src="/logo/linuniverse_full.png"
+      height="100%"
+      style={{ display: 'block', width: 'auto', objectFit: 'contain' }}
+    />
+  );
 
   return (
     <LogoRoot
@@ -27,9 +34,8 @@ export const Logo = forwardRef((props, ref) => {
       className={mergeClasses([logoClasses.root, className])}
       sx={[
         () => ({
-          // width: 40,
-          height: 40,
-          ...(!isSingle && { height: 40 }),
+          // Match the previous full wordmark's visual width at its natural aspect ratio.
+          height: isSingle ? 40 : 44,
           ...(disabled && { pointerEvents: 'none' }),
         }),
         ...(Array.isArray(sx) ? sx : [sx]),

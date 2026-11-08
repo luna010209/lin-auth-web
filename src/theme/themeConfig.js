@@ -22,19 +22,19 @@ export const themeConfig = {
    *************************************** */
   palette: {
     primary: {
-      lighter: '#FFF4E5',     // very soft orange
-      light: '#FFD700',       // yellow
-      main: '#FF8C00',        // main orange (brand)
-      dark: '#CC7000',        // darker orange
-      darker: '#8B4A00',      // deep tone
+      lighter: '#F3EEFC', // 50 — Lin Universe violet
+      light: '#A585E8',   // 300
+      main: '#6236C8',    // 500 — brand primary
+      dark: '#5229AD',    // 600
+      darker: '#421F8F',  // 700
       contrastText: '#FFFFFF',
     },
     secondary: {
-      lighter: '#EBD9FF',
-      light: '#A78BFA',
-      main: '#6D28D9',   // Lin Universe violet
-      dark: '#4C1D95',
-      darker: '#2E1065',
+      lighter: '#E2D6F8', // 100
+      light: '#8458DD',   // 400
+      main: '#421F8F',    // 700 — deeper violet (not pink; pink is gradient-only)
+      dark: '#321770',    // 800
+      darker: '#230F52',  // 900
       contrastText: '#FFFFFF',
     },
     third: {

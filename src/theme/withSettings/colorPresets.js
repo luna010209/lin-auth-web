@@ -20,11 +20,11 @@ export const primaryColorPresets = {
     contrastText: '#FFFFFF',
   },
   preset2: {
-    lighter: '#EBD9FF',
-    light: '#A78BFA',
-    main: '#6D28D9',   // Lin Universe official
-    dark: '#4C1D95',
-    darker: '#2E1065',
+    lighter: '#F3EEFC',
+    light: '#A585E8',
+    main: '#6236C8', // Lin Universe violet
+    dark: '#5229AD',
+    darker: '#421F8F',
     contrastText: '#FFFFFF',
   },
   preset3: {
