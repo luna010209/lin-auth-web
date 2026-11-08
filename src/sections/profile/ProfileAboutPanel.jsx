@@ -6,10 +6,8 @@ import { enqueueSnackbar } from 'notistack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import { Form } from '../../components/hookForm/FormProvider';
 import { Field } from '../../components/hookForm/Fields';
@@ -19,11 +17,45 @@ import { useAuthContext } from '../../auth/hooks';
 import { useTranslate } from '../../locales';
 import { parseBirthdayForForm } from '../../utils/profile';
 import { createProfileAboutSchema } from './schema';
+import { ProfileLocationField } from './ProfileLocationField';
 
 // ----------------------------------------------------------------------
 
 const GENDERS = ['', 'MALE', 'FEMALE', 'NON_BINARY', 'OTHER'];
 const MARITAL = ['', 'SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED', 'PARTNERED'];
+
+function ProfileFieldWithVisibility({ children, switchName, switchLabel }) {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        alignItems: { xs: 'stretch', md: 'flex-start' },
+        gap: { xs: 0.5, md: 2 },
+      }}
+    >
+      <Box sx={{ flex: 1, minWidth: 0 }}>{children}</Box>
+      <Box
+        sx={{
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          minHeight: { md: 56 },
+          pl: { xs: 0.5, md: 0 },
+        }}
+      >
+        <Field.Switch
+          name={switchName}
+          label={switchLabel}
+          sx={{ m: 0 }}
+          slotProps={{
+            wrapper: { sx: { width: 1 } },
+          }}
+        />
+      </Box>
+    </Box>
+  );
+}
 
 function userToAboutDefaults(user) {
   return {
@@ -40,7 +72,7 @@ function userToAboutDefaults(user) {
   };
 }
 
-export function ProfileAboutPanel({ onSaved }) {
+export function ProfileAboutPanel({ embedded = false, onSaved }) {
   const { user, checkUserSession } = useAuthContext();
   const { t } = useTranslate('profile');
   const { t: tAuth } = useTranslate('auth');
@@ -90,13 +122,16 @@ export function ProfileAboutPanel({ onSaved }) {
     }
   });
 
-  return (
-    <Card sx={{ p: { xs: 2.5, md: 3 } }}>
+  const formBody = (
       <Form methods={methods} onSubmit={onSubmit}>
         <Stack spacing={2.5}>
           <Field.Text name="displayName" label={l('displayName')} />
-          <Field.DatePicker name="birthday" label={l('birthday')} />
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+
+          <ProfileFieldWithVisibility switchName="showBirthday" switchLabel={l('showBirthday')}>
+            <Field.DatePicker name="birthday" label={l('birthday')} />
+          </ProfileFieldWithVisibility>
+
+          <ProfileFieldWithVisibility switchName="showGender" switchLabel={l('showGender')}>
             <Field.Select name="gender" label={l('gender')}>
               {GENDERS.map((value) => (
                 <MenuItem key={value || 'unset'} value={value}>
@@ -104,6 +139,9 @@ export function ProfileAboutPanel({ onSaved }) {
                 </MenuItem>
               ))}
             </Field.Select>
+          </ProfileFieldWithVisibility>
+
+          <ProfileFieldWithVisibility switchName="showMaritalStatus" switchLabel={l('showMaritalStatus')}>
             <Field.Select name="maritalStatus" label={l('maritalStatus')}>
               {MARITAL.map((value) => (
                 <MenuItem key={value || 'unset'} value={value}>
@@ -111,32 +149,24 @@ export function ProfileAboutPanel({ onSaved }) {
                 </MenuItem>
               ))}
             </Field.Select>
-          </Stack>
-          <Field.Text name="hometown" label={l('hometown')} />
-          <Field.Text name="currentLocation" label={l('currentLocation')} />
+          </ProfileFieldWithVisibility>
 
-          <Divider />
-          <Typography variant="subtitle2" color="text.secondary">
-            {l('visibility')}
-          </Typography>
-          <Box
-            sx={{
-              display: 'grid',
-              gap: 1,
-              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-            }}
-          >
-            <Field.Switch name="showBirthday" label={l('showBirthday')} />
-            <Field.Switch name="showGender" label={l('showGender')} />
-            <Field.Switch name="showMaritalStatus" label={l('showMaritalStatus')} />
-            <Field.Switch name="showHometown" label={l('showHometown')} />
-          </Box>
+          <ProfileFieldWithVisibility switchName="showHometown" switchLabel={l('showHometown')}>
+            <Field.Text name="hometown" label={l('hometown')} />
+          </ProfileFieldWithVisibility>
+
+          <ProfileLocationField name="currentLocation" />
 
           <Button type="submit" variant="contained" size="large" disabled={saving} sx={{ alignSelf: 'flex-start' }}>
             {saving ? tAuth('label.saving') : l('saveAbout')}
           </Button>
         </Stack>
       </Form>
-    </Card>
   );
+
+  if (embedded) {
+    return formBody;
+  }
+
+  return <Card sx={{ p: { xs: 2.5, md: 3 } }}>{formBody}</Card>;
 }

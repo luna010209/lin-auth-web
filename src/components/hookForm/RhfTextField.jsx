@@ -3,12 +3,19 @@ import { transformValue, transformValueOnBlur, transformValueOnChange } from 'mi
 
 import TextField from '@mui/material/TextField';
 
+import { splitTextFieldProps } from './sanitizeFieldProps';
+
 // ----------------------------------------------------------------------
 
-export function RHFTextField({ name, helperText, slotProps, type = 'text', ...other }) {
+export function RHFTextField({ name, helperText, slotProps, type = 'text', sx, ...other }) {
   const { control } = useFormContext();
 
   const isNumberType = type === 'number';
+  const { textFieldProps, sx: sanitizedSx, slotProps: mergedSlotProps } = splitTextFieldProps({
+    sx,
+    slotProps,
+    ...other,
+  });
 
   return (
     <Controller
@@ -16,8 +23,10 @@ export function RHFTextField({ name, helperText, slotProps, type = 'text', ...ot
       control={control}
       render={({ field, fieldState: { error } }) => (
         <TextField
+          {...textFieldProps}
           {...field}
           fullWidth
+          sx={sanitizedSx}
           value={isNumberType ? transformValue(field.value) : field.value}
           onChange={(event) => {
             const transformedValue = isNumberType
@@ -37,14 +46,13 @@ export function RHFTextField({ name, helperText, slotProps, type = 'text', ...ot
           error={!!error}
           helperText={error?.message ?? helperText}
           slotProps={{
-            ...slotProps,
+            ...mergedSlotProps,
             htmlInput: {
               autoComplete: 'off',
-              ...slotProps?.htmlInput,
+              ...mergedSlotProps?.htmlInput,
               ...(isNumberType && { inputMode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }),
             },
           }}
-          {...other}
         />
       )}
     />

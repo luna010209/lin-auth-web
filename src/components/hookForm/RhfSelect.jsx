@@ -11,11 +11,17 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 import { HelperText } from './HelpText';
+import { splitTextFieldProps } from './sanitizeFieldProps';
 
 // ----------------------------------------------------------------------
 
-export function RHFSelect({ name, children, helperText, slotProps = {}, ...other }) {
+export function RHFSelect({ name, children, helperText, slotProps = {}, sx, ...other }) {
   const { control } = useFormContext();
+  const { textFieldProps, sx: sanitizedSx, slotProps: mergedSlotProps } = splitTextFieldProps({
+    sx,
+    slotProps,
+    ...other,
+  });
 
   const labelId = `${name}-select`;
 
@@ -40,14 +46,15 @@ export function RHFSelect({ name, children, helperText, slotProps = {}, ...other
       control={control}
       render={({ field, fieldState: { error } }) => (
         <TextField
+          {...textFieldProps}
           {...field}
           select
           fullWidth
-          value={field.value ?? ""}
+          value={field.value ?? ''}
           error={!!error}
           helperText={error?.message ?? helperText}
-          slotProps={merge(baseSlotProps, slotProps)}
-          {...other}
+          sx={sanitizedSx}
+          slotProps={merge(baseSlotProps, mergedSlotProps)}
         >
           {children}
         </TextField>

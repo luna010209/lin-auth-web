@@ -39,7 +39,7 @@ function splitPhone(phone) {
   return { local: match[2] || '', dialCode: match[1] };
 }
 
-export function ProfileAccountPanel() {
+export function ProfileAccountPanel({ embedded = false }) {
   const { user, checkUserSession } = useAuthContext();
   const { t } = useTranslate('profile');
   const { t: tAuth } = useTranslate('auth');
@@ -185,9 +185,12 @@ export function ProfileAccountPanel() {
     setEmailMode(true);
   };
 
+  const accountCardSx = embedded ? undefined : { p: { xs: 2.5, md: 3 } };
+  const AccountWrap = embedded ? Box : Card;
+
   return (
     <Stack spacing={2}>
-      <Card sx={{ p: { xs: 2.5, md: 3 } }}>
+      <AccountWrap sx={accountCardSx}>
         <Form methods={accountForm} onSubmit={onAccountSubmit}>
           <Stack spacing={2}>
             <Field.Text name="username" label={lAuth('username')} />
@@ -203,7 +206,7 @@ export function ProfileAccountPanel() {
               country={selectedCountry}
               onCountryChange={setSelectedCountry}
             />
-            <Stack direction="row" spacing={1} flexWrap="wrap">
+            <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
               <Button type="submit" variant="contained" disabled={saving}>
                 {saving ? lAuth('saving') : l('saveAccount')}
               </Button>
@@ -213,10 +216,10 @@ export function ProfileAccountPanel() {
             </Stack>
           </Stack>
         </Form>
-      </Card>
+      </AccountWrap>
 
       {emailMode && (
-        <Card sx={{ p: { xs: 2.5, md: 3 } }}>
+        <AccountWrap sx={embedded ? { pt: 2, borderTop: 1, borderColor: 'divider' } : { p: { xs: 2.5, md: 3 } }}>
           <Form methods={emailForm}>
             <Stack spacing={2}>
               <Field.Text name="email" label={lAuth('email')} disabled={emailVerified} />
@@ -228,7 +231,7 @@ export function ProfileAccountPanel() {
               {emailSent && (
                 <>
                   <Alert severity="info">{mAuth('sendAlert')}</Alert>
-                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} alignItems="center">
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ alignItems: 'center' }}>
                     <Field.Text name="verifyCode" label={lAuth('verifyCode')} sx={{ flex: 1 }} />
                     <Button variant="contained" onClick={handleVerifyCode} disabled={emailLoading}>
                       {emailLoading ? lAuth('verifying') : lAuth('verify')}
@@ -248,7 +251,7 @@ export function ProfileAccountPanel() {
               </Button>
             </Stack>
           </Form>
-        </Card>
+        </AccountWrap>
       )}
 
       <Dialog open={emailConfirmOpen} onClose={() => setEmailConfirmOpen(false)} maxWidth="xs" fullWidth>
@@ -263,7 +266,7 @@ export function ProfileAccountPanel() {
               components={{ b: <Box component="span" sx={{ fontWeight: 700 }} /> }}
             />
           </Typography>
-          <Stack direction="row" spacing={1} justifyContent="flex-end">
+          <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
             <Button variant="text" onClick={() => setEmailConfirmOpen(false)}>
               {lAuth('cancel')}
             </Button>

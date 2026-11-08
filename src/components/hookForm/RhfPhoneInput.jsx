@@ -1,10 +1,12 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { PhoneInput } from './rhfPhoneInput/PhoneInput';
+import { omitBlockedDomProps } from './sanitizeFieldProps';
 
 // ----------------------------------------------------------------------
 
 export function RHFPhoneInput({ name, helperText, ...other }) {
   const { control } = useFormContext();
+  const safeOther = omitBlockedDomProps(other);
 
   return (
     <Controller
@@ -16,7 +18,7 @@ export function RHFPhoneInput({ name, helperText, ...other }) {
           fullWidth
           error={!!error}
           helperText={error?.message ?? helperText}
-          {...other}
+          {...safeOther}
         />
       )}
     />

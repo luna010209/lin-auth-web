@@ -15,6 +15,9 @@
     "hometown": "出身地",
     "maritalStatus": "婚姻状況",
     "currentLocation": "現在地",
+    "locationSearchPlaceholder": "住所または場所を検索",
+    "locationSearchHelper": "検索するか現在地を使用します。プロフィールにテキストで保存されます。",
+    "useMyLocation": "現在地を使う",
     "visibility": "公開設定",
     "showBirthday": "誕生日を公開",
     "showGender": "性別を公開",
@@ -42,6 +45,10 @@
     "aboutSuccess": "プロフィールを更新しました。",
     "aboutFail": "プロフィールを更新できませんでした。",
     "accountSuccess": "アカウントを更新しました。",
-    "accountFail": "アカウントを更新できませんでした。"
+    "accountFail": "アカウントを更新できませんでした。",
+    "mapLoadFail": "Google Maps を読み込めませんでした。API キーと有効な API を確認してください。",
+    "mapKeyMissing": "地図を表示するには VITE_GOOGLE_MAPS_API_KEY を設定してください。",
+    "locationDenied": "位置情報の許可がありません。許可するか手動で検索してください。",
+    "locationUnsupported": "このブラウザは位置情報に対応していません。"
   }
 }

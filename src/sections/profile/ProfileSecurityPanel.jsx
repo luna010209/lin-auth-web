@@ -20,7 +20,7 @@ import { createPasswordSchema } from '../auth/schema/signUp';
 
 // ----------------------------------------------------------------------
 
-export function ProfileSecurityPanel() {
+export function ProfileSecurityPanel({ embedded = false }) {
   const { t: tAuth } = useTranslate('auth');
   const c = useCallback((key) => tAuth(`condition.${key}`), [tAuth]);
   const l = useCallback((key) => tAuth(`label.${key}`), [tAuth]);
@@ -64,33 +64,37 @@ export function ProfileSecurityPanel() {
     </InputAdornment>
   );
 
-  return (
-    <Card sx={{ p: { xs: 2.5, md: 3 }, maxWidth: 480 }}>
-      <Form methods={methods} onSubmit={onSubmit}>
-        <Stack spacing={2}>
-          <Field.Text
-            name="currentPassword"
-            label={l('currentPassword')}
-            type={showPassword.value ? 'text' : 'password'}
-            slotProps={{ input: { endAdornment: eyeAdornment } }}
-          />
-          <Field.Text
-            name="password"
-            label={l('newPassword')}
-            type={showPassword.value ? 'text' : 'password'}
-            slotProps={{ input: { endAdornment: eyeAdornment } }}
-          />
-          <Field.Text
-            name="cfPassword"
-            label={l('confirmNewPassword')}
-            type={showPassword.value ? 'text' : 'password'}
-            slotProps={{ input: { endAdornment: eyeAdornment } }}
-          />
-          <Button type="submit" variant="contained" disabled={loading}>
-            {loading ? l('saving') : l('changePassword')}
-          </Button>
-        </Stack>
-      </Form>
-    </Card>
+  const formBody = (
+    <Form methods={methods} onSubmit={onSubmit}>
+      <Stack spacing={2} sx={{ maxWidth: embedded ? 480 : undefined }}>
+        <Field.Text
+          name="currentPassword"
+          label={l('currentPassword')}
+          type={showPassword.value ? 'text' : 'password'}
+          slotProps={{ input: { endAdornment: eyeAdornment } }}
+        />
+        <Field.Text
+          name="password"
+          label={l('newPassword')}
+          type={showPassword.value ? 'text' : 'password'}
+          slotProps={{ input: { endAdornment: eyeAdornment } }}
+        />
+        <Field.Text
+          name="cfPassword"
+          label={l('confirmNewPassword')}
+          type={showPassword.value ? 'text' : 'password'}
+          slotProps={{ input: { endAdornment: eyeAdornment } }}
+        />
+        <Button type="submit" variant="contained" disabled={loading} sx={{ alignSelf: 'flex-start' }}>
+          {loading ? l('saving') : l('changePassword')}
+        </Button>
+      </Stack>
+    </Form>
   );
+
+  if (embedded) {
+    return formBody;
+  }
+
+  return <Card sx={{ p: { xs: 2.5, md: 3 }, maxWidth: 480 }}>{formBody}</Card>;
 }

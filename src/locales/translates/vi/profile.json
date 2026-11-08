@@ -15,6 +15,9 @@
     "hometown": "Quê quán",
     "maritalStatus": "Tình trạng hôn nhân",
     "currentLocation": "Vị trí hiện tại",
+    "locationSearchPlaceholder": "Tìm địa chỉ hoặc địa điểm",
+    "locationSearchHelper": "Tìm kiếm hoặc dùng vị trí hiện tại. Lưu vào hồ sơ dưới dạng văn bản.",
+    "useMyLocation": "Dùng vị trí của tôi",
     "visibility": "Hiển thị công khai",
     "showBirthday": "Hiện ngày sinh",
     "showGender": "Hiện giới tính",
@@ -42,6 +45,10 @@
     "aboutSuccess": "Đã cập nhật hồ sơ.",
     "aboutFail": "Không thể cập nhật hồ sơ.",
     "accountSuccess": "Đã cập nhật tài khoản.",
-    "accountFail": "Không thể cập nhật tài khoản."
+    "accountFail": "Không thể cập nhật tài khoản.",
+    "mapLoadFail": "Không tải được Google Maps. Kiểm tra API key và các API đã bật.",
+    "mapKeyMissing": "Thêm VITE_GOOGLE_MAPS_API_KEY để hiển thị bản đồ.",
+    "locationDenied": "Chưa được phép truy cập vị trí. Cho phép hoặc tìm thủ công.",
+    "locationUnsupported": "Trình duyệt không hỗ trợ định vị."
   }
 }

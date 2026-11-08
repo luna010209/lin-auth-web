@@ -15,6 +15,9 @@
     "hometown": "家乡",
     "maritalStatus": "婚姻状况",
     "currentLocation": "当前位置",
+    "locationSearchPlaceholder": "搜索地址或地点",
+    "locationSearchHelper": "搜索或使用当前位置，将以文本保存到资料。",
+    "useMyLocation": "使用我的位置",
     "visibility": "公开可见性",
     "showBirthday": "公开生日",
     "showGender": "公开性别",
@@ -42,6 +45,10 @@
     "aboutSuccess": "资料已更新。",
     "aboutFail": "无法更新资料。",
     "accountSuccess": "账户已更新。",
-    "accountFail": "无法更新账户。"
+    "accountFail": "无法更新账户。",
+    "mapLoadFail": "无法加载 Google Maps。请检查 API 密钥和已启用的 API。",
+    "mapKeyMissing": "请设置 VITE_GOOGLE_MAPS_API_KEY 以显示地图。",
+    "locationDenied": "未授予位置权限，请允许或手动搜索。",
+    "locationUnsupported": "此浏览器不支持定位。"
   }
 }

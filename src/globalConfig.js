@@ -19,6 +19,9 @@ export const CONFIG = {
     skip: false,
     redirectPath: paths.persona.manage,
   },
+  googleMaps: {
+    apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '',
+  },
   firebase: {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY ?? '',
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ?? '',

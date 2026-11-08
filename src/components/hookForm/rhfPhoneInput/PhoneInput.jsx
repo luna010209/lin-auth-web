@@ -12,6 +12,7 @@ import { inputBaseClasses } from '@mui/material/InputBase';
 import { countries } from '../../../assets/data/countries';
 import { CountryListPopover } from './ListPopover';
 import { Iconify } from '../../iconify';
+import { omitBlockedDomProps, splitTextFieldProps } from '../sanitizeFieldProps';
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +33,8 @@ export const PhoneInput = forwardRef((props, ref) => {
     onCountryChange,
     ...rest
   } = props;
+
+  const safeRest = omitBlockedDomProps(rest);
 
   const [searchCountry, setSearchCountry] = useState('');
   const selectedCountry = inputCountryCode || 'KR';
@@ -137,7 +140,7 @@ export const PhoneInput = forwardRef((props, ref) => {
             ),
           },
         }}
-        {...rest}
+        {...safeRest}
       />
     </Box>
   );
@@ -150,7 +153,6 @@ const CustomInput = forwardRef((props, ref) => {
   const handleChange = (e) => {
     const value = e.target.value;
 
-    // ✅ only digits
     const digitsOnly = value.replace(/[^0-9]/g, '');
 
     onChange({
@@ -162,5 +164,15 @@ const CustomInput = forwardRef((props, ref) => {
     });
   };
 
-  return <TextField inputRef={ref} {...rest} onChange={handleChange} />;
+  const { textFieldProps, sx, slotProps } = splitTextFieldProps(rest);
+
+  return (
+    <TextField
+      {...textFieldProps}
+      inputRef={ref}
+      sx={sx}
+      slotProps={slotProps}
+      onChange={handleChange}
+    />
+  );
 });

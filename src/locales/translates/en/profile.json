@@ -15,6 +15,9 @@
     "hometown": "Hometown",
     "maritalStatus": "Marital status",
     "currentLocation": "Current location",
+    "locationSearchPlaceholder": "Search address or place",
+    "locationSearchHelper": "Search below or use your current location. Saved to your profile as text.",
+    "useMyLocation": "Use my location",
     "visibility": "Visibility on public surfaces",
     "showBirthday": "Show birthday",
     "showGender": "Show gender",
@@ -42,6 +45,10 @@
     "aboutSuccess": "Profile updated.",
     "aboutFail": "Could not update profile.",
     "accountSuccess": "Account updated.",
-    "accountFail": "Could not update account."
+    "accountFail": "Could not update account.",
+    "mapLoadFail": "Could not load Google Maps. Check your API key and enabled APIs.",
+    "mapKeyMissing": "Add VITE_GOOGLE_MAPS_API_KEY to enable the map.",
+    "locationDenied": "Location permission denied. Allow access or search manually.",
+    "locationUnsupported": "This browser does not support geolocation."
   }
 }

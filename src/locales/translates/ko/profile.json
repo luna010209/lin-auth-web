@@ -15,6 +15,9 @@
     "hometown": "고향",
     "maritalStatus": "결혼 여부",
     "currentLocation": "현재 위치",
+    "locationSearchPlaceholder": "주소 또는 장소 검색",
+    "locationSearchHelper": "검색하거나 현재 위치를 사용합니다. 프로필에 텍스트로 저장됩니다.",
+    "useMyLocation": "내 위치 사용",
     "visibility": "공개 표시 여부",
     "showBirthday": "생일 공개",
     "showGender": "성별 공개",
@@ -42,6 +45,10 @@
     "aboutSuccess": "프로필이 저장되었습니다.",
     "aboutFail": "프로필을 저장하지 못했습니다.",
     "accountSuccess": "계정이 저장되었습니다.",
-    "accountFail": "계정을 저장하지 못했습니다."
+    "accountFail": "계정을 저장하지 못했습니다.",
+    "mapLoadFail": "Google Maps를 불러오지 못했습니다. API 키와 사용 설정한 API를 확인하세요.",
+    "mapKeyMissing": "지도를 사용하려면 VITE_GOOGLE_MAPS_API_KEY를 설정하세요.",
+    "locationDenied": "위치 권한이 거부되었습니다. 허용하거나 직접 검색하세요.",
+    "locationUnsupported": "이 브라우저는 위치 정보를 지원하지 않습니다."
   }
 }

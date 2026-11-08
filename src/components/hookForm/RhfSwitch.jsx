@@ -8,53 +8,65 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { HelperText } from './HelpText';
+import { omitBlockedDomProps, sanitizeFieldProps, spreadSanitizedRootProps } from './sanitizeFieldProps';
 
 // ----------------------------------------------------------------------
 
 export function RHFSwitch({ name, helperText, label, slotProps, sx, ...other }) {
   const { control } = useFormContext();
 
-  const {
-    inputProps,
-    InputProps,
-    alignItems,
-    justifyContent,
-    flexWrap,
-    PaperProps,
-    ...safeOther
-  } = other;
+  const sanitized = sanitizeFieldProps({ sx, ...other });
+  const layoutSx = sanitized.sx;
+  const inputProps = sanitized.inputProps;
+  const labelProps = spreadSanitizedRootProps(sanitized);
+  const wrapperSanitized = sanitizeFieldProps(slotProps?.wrapper ?? {});
+  const wrapperSx = wrapperSanitized.sx;
+  const wrapperProps = spreadSanitizedRootProps(wrapperSanitized);
+  const switchSlot = omitBlockedDomProps(slotProps?.switch ?? {});
+  const switchInputProps = {
+    ...inputProps,
+    ...slotProps?.switch?.inputProps,
+  };
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: { error } }) => (
-        <Box {...slotProps?.wrapper}>
-          <FormControlLabel
-            label={label}
-            control={
-              <Switch
-                {...field}
-                checked={field.value}
-                {...slotProps?.switch}
-                inputProps={{
-                  id: `${name}-switch`,
-                  ...(!label && { 'aria-label': `${name} switch` }),
-                  ...slotProps?.switch?.inputProps,
-                }}
-              />
-            }
-            sx={[{ mx: 0 }, ...(Array.isArray(sx) ? (sx ?? []) : [sx])]}
-            {...safeOther}
-          />
+      render={({ field, fieldState: { error } }) => {
+        const { value, ...switchField } = field;
 
-          <HelperText
-            {...slotProps?.helperText}
-            errorMessage={error?.message}
-            helperText={helperText}
-          />
-        </Box>
-      )}
+        return (
+          <Box sx={wrapperSx} {...wrapperProps}>
+            <FormControlLabel
+              label={label}
+              control={
+                <Switch
+                  {...switchField}
+                  checked={!!value}
+                  {...switchSlot}
+                  slotProps={{
+                    ...slotProps?.switch?.slotProps,
+                    input: {
+                      id: `${name}-switch`,
+                      ...(!label && { 'aria-label': `${name} switch` }),
+                      ...switchInputProps,
+                      ...slotProps?.switch?.slotProps?.input,
+                    },
+                  }}
+                />
+              }
+              sx={[{ mx: 0 }, ...(Array.isArray(layoutSx) ? layoutSx : layoutSx ? [layoutSx] : [])]}
+              {...labelProps}
+            />
+
+            <HelperText
+              {...slotProps?.helperText}
+              errorMessage={error?.message}
+              helperText={helperText}
+            />
+          </Box>
+        );
+      }}
     />
   );
 }
@@ -68,6 +80,10 @@ export function RHFMultiSwitch({ name, label, options, helperText, slotProps, ..
     selectedItems.includes(item)
       ? selectedItems.filter((value) => value !== item)
       : [...selectedItems, item];
+
+  const groupSanitized = sanitizeFieldProps(other);
+  const groupSx = groupSanitized.sx;
+  const groupProps = spreadSanitizedRootProps(groupSanitized);
 
   return (
     <Controller
@@ -90,7 +106,7 @@ export function RHFMultiSwitch({ name, label, options, helperText, slotProps, ..
             </FormLabel>
           )}
 
-          <FormGroup {...other}>
+          <FormGroup sx={groupSx} {...groupProps}>
             {options.map((option) => (
               <FormControlLabel
                 key={option.value}
@@ -98,11 +114,13 @@ export function RHFMultiSwitch({ name, label, options, helperText, slotProps, ..
                   <Switch
                     checked={field.value.includes(option.value)}
                     onChange={() => field.onChange(getSelected(field.value, option.value))}
-                    {...slotProps?.switch}
-                    inputProps={{
-                      id: `${option.label}-switch`,
-                      ...(!option.label && { 'aria-label': `${option.label} switch` }),
-                      ...slotProps?.switch?.inputProps,
+                    {...omitBlockedDomProps(slotProps?.switch)}
+                    slotProps={{
+                      input: {
+                        id: `${option.label}-switch`,
+                        ...(!option.label && { 'aria-label': `${option.label} switch` }),
+                        ...slotProps?.switch?.inputProps,
+                      },
                     }}
                   />
                 }

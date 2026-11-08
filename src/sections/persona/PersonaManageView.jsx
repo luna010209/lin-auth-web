@@ -146,7 +146,11 @@ export function PersonaManageView() {
       <PageDocumentTitle title={l('title')} />
 
       <Box sx={{ p: { xs: 2, md: 3 } }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+        <Stack
+          direction="row"
+          spacing={0}
+          sx={{ mb: 2, alignItems: 'center', justifyContent: 'space-between' }}
+        >
           <Typography variant="h4">{l('manage')}</Typography>
           <Stack direction="row" spacing={1}>
             <Button variant="outlined" onClick={loadPersonas} disabled={loading} startIcon={<Iconify icon="solar:refresh-bold" />}>
