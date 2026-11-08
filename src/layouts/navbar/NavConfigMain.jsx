@@ -25,6 +25,12 @@ export const navData = [
         icon: ICONS.dashboard,
       },
       {
+        title: 'Profile',
+        translateKey: 'menu.profile',
+        path: paths.profile.root,
+        icon: ICONS.user,
+      },
+      {
         title: 'Personas',
         translateKey: 'menu.personas',
         path: paths.persona.manage,

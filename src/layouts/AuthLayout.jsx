@@ -8,7 +8,6 @@ import { iconButtonClasses } from '@mui/material/IconButton';
 
 import { NavMobile } from './navbar/NavMobile';
 import { NavVertical } from './navbar/NavVertical';
-import { account } from './navbar/NavConfigAccount';
 import { navData as dashboardNavData } from './navbar/NavConfigMain';
 import { layoutClasses, HeaderSection, LayoutSection, MainSection } from './core';
 import { dashboardLayoutVars, dashboardNavColorVars } from './navbar/cssVars';
@@ -18,6 +17,7 @@ import { LanguagePopover } from './components/language/LanguagePopover';
 import { filterNavItemsByRole } from '../routes/permissions';
 import { MenuButton } from './components/MenuButton';
 import { AccountDrawer } from './components/account/AccountDrawer';
+import { account } from './navbar/NavConfigAccount';
 import { SettingsButton } from './components/SettingsButton';
 import { useSettingsContext } from '../components/settings';
 import { PageHeaderProvider, PageHeaderSlot } from './page';
@@ -90,7 +90,7 @@ export function AuthLayout({ sx, cssVars, children, slotProps, layoutQuery = 'lg
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1.5 }, flexShrink: 0 }}>
           <LanguagePopover data={allLangs} />
           <SettingsButton />
-          <AccountDrawer data={account} />
+          {authenticated ? <AccountDrawer data={account} /> : null}
         </Box>
       ),
     };

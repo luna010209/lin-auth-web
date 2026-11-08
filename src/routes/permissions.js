@@ -24,6 +24,7 @@ export const ACCESS = {
 // ------------------------------------
 export const ROUTE_PERMISSIONS = [
   { path: paths.main.home, access: ACCESS.AUTH },
+  { path: paths.profile.root, access: ACCESS.AUTH },
   { path: paths.persona.manage, access: ACCESS.AUTH },
   { path: paths.admin.dashboard, access: ACCESS.ADMIN },
 ];

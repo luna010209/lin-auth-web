@@ -1,0 +1,47 @@
+{
+  "condition": {
+    "displayName": "请填写显示名称。",
+    "username": "用户名至少 3 个字符。"
+  },
+  "label": {
+    "title": "个人资料",
+    "heroSubtitle": "私人账户与基本资料",
+    "tabAbout": "关于我",
+    "tabAccount": "账户",
+    "tabSecurity": "安全",
+    "displayName": "显示名称",
+    "birthday": "生日",
+    "gender": "性别",
+    "hometown": "家乡",
+    "maritalStatus": "婚姻状况",
+    "currentLocation": "当前位置",
+    "visibility": "公开可见性",
+    "showBirthday": "公开生日",
+    "showGender": "公开性别",
+    "showMaritalStatus": "公开婚姻状况",
+    "showHometown": "公开家乡",
+    "genderUnset": "不填写",
+    "maritalUnset": "未设置",
+    "genderMALE": "男",
+    "genderFEMALE": "女",
+    "genderNON_BINARY": "非二元",
+    "genderOTHER": "其他",
+    "maritalSINGLE": "单身",
+    "maritalMARRIED": "已婚",
+    "maritalDIVORCED": "离异",
+    "maritalWIDOWED": "丧偶",
+    "maritalPARTNERED": "有伴侣",
+    "saveAbout": "保存资料",
+    "saveAccount": "保存账户",
+    "accountReadOnlyEmail": "邮箱",
+    "changeEmail": "更改邮箱",
+    "continueToPersonas": "前往 Persona"
+  },
+  "message": {
+    "onboardingBanner": "请填写显示名称等信息，可随时修改。",
+    "aboutSuccess": "资料已更新。",
+    "aboutFail": "无法更新资料。",
+    "accountSuccess": "账户已更新。",
+    "accountFail": "无法更新账户。"
+  }
+}

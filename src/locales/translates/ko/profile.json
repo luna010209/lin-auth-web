@@ -1,0 +1,47 @@
+{
+  "condition": {
+    "displayName": "표시 이름을 입력해 주세요.",
+    "username": "사용자 이름은 3자 이상이어야 합니다."
+  },
+  "label": {
+    "title": "프로필",
+    "heroSubtitle": "비공개 계정 및 기본 프로필",
+    "tabAbout": "소개",
+    "tabAccount": "계정",
+    "tabSecurity": "보안",
+    "displayName": "표시 이름",
+    "birthday": "생일",
+    "gender": "성별",
+    "hometown": "고향",
+    "maritalStatus": "결혼 여부",
+    "currentLocation": "현재 위치",
+    "visibility": "공개 표시 여부",
+    "showBirthday": "생일 공개",
+    "showGender": "성별 공개",
+    "showMaritalStatus": "결혼 여부 공개",
+    "showHometown": "고향 공개",
+    "genderUnset": "선택 안 함",
+    "maritalUnset": "미설정",
+    "genderMALE": "남성",
+    "genderFEMALE": "여성",
+    "genderNON_BINARY": "논바이너리",
+    "genderOTHER": "기타",
+    "maritalSINGLE": "미혼",
+    "maritalMARRIED": "기혼",
+    "maritalDIVORCED": "이혼",
+    "maritalWIDOWED": "사별",
+    "maritalPARTNERED": "동거/파트너",
+    "saveAbout": "프로필 저장",
+    "saveAccount": "계정 저장",
+    "accountReadOnlyEmail": "이메일",
+    "changeEmail": "이메일 변경",
+    "continueToPersonas": "페르소나로 이동"
+  },
+  "message": {
+    "onboardingBanner": "표시 이름과 원하는 정보를 입력해 주세요. 언제든 수정할 수 있습니다.",
+    "aboutSuccess": "프로필이 저장되었습니다.",
+    "aboutFail": "프로필을 저장하지 못했습니다.",
+    "accountSuccess": "계정이 저장되었습니다.",
+    "accountFail": "계정을 저장하지 못했습니다."
+  }
+}

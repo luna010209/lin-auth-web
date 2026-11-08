@@ -34,7 +34,8 @@ import {
   appLoginCheck,
   appRegister,
 } from '../../api/services/userService';
-import { setTokens } from '../../auth/token';
+import { getStoredUserJson, setTokens } from '../../auth/token';
+import { resolvePostLoginPath } from '../../utils/profile';
 import { useAuthContext } from '../../auth/hooks';
 import { CONFIG } from '../../globalConfig';
 import { signInWithGoogle } from '../../auth/googleAuth';
@@ -61,7 +62,14 @@ async function completeAppLogin(result, checkUserSession, router, returnTo, succ
 
   await checkUserSession({ strict: true });
   enqueueSnackbar(successMessage, { variant: 'success' });
-  router.replace(returnTo);
+
+  let sessionUser = null;
+  try {
+    sessionUser = JSON.parse(getStoredUserJson() || 'null');
+  } catch {
+    sessionUser = null;
+  }
+  router.replace(resolvePostLoginPath(sessionUser, returnTo));
 }
 
 export function LoginView() {
@@ -121,7 +129,14 @@ export function LoginView() {
       await checkUserSession({ strict: true });
 
       enqueueSnackbar(m('loginSuccess'), { variant: 'success' });
-      router.replace(returnTo);
+
+      let sessionUser = null;
+      try {
+        sessionUser = JSON.parse(getStoredUserJson() || 'null');
+      } catch {
+        // ignore
+      }
+      router.replace(resolvePostLoginPath(sessionUser, returnTo));
     } catch (error) {
       enqueueSnackbar(getApiErrorMessage(error, m('loginFail')), { variant: 'error' });
     }

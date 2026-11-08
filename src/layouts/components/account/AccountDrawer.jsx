@@ -24,7 +24,16 @@ import { LogOutButton } from './LogOutButton';
 import { useAuthContext } from '../../../auth/hooks';
 import { formatDate, formatDateTime } from '../../../utils/formatTime';
 import { RoleBadge } from './RoleBadge';
-import { updateUserInfo, updateUserBasicInfo, changePassword, changeAvatar, sendVerificationCode, verifyEmailCode, getCurrentUser } from '../../../api/services/userService';
+import {
+  updateUserInfo,
+  updateAccountInfo,
+  updateBasicProfile,
+  changePassword,
+  changeAvatar,
+  sendVerificationCode,
+  verifyEmailCode,
+  getCurrentUser,
+} from '../../../api/services/userService';
 import { Field } from '../../../components/hookForm/Fields';
 import { Form } from '../../../components/hookForm/FormProvider';
 import { createEmailSchema, createInfoSchema, createPasswordSchema } from '../../../sections/auth/schema/signUp';
@@ -286,7 +295,6 @@ export function AccountDrawer({ sx, ...other }) {
 
       await updateUserInfo({
         username: profile.username || user?.username,
-        displayName: profile.displayName,
         phone: profile.phone,
         email: String(email).trim(),
       });
@@ -339,11 +347,14 @@ export function AccountDrawer({ sx, ...other }) {
         return;
       }
 
-      await updateUserBasicInfo({
+      await updateAccountInfo({
         username: data.username,
-        displayName: data.displayName,
         phone: data.phone,
         email: storedEmail,
+      });
+
+      await updateBasicProfile({
+        displayName: data.displayName,
       });
 
       await checkUserSession?.();

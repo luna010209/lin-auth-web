@@ -1,0 +1,47 @@
+{
+  "condition": {
+    "displayName": "Display name is required.",
+    "username": "Username must be at least 3 characters."
+  },
+  "label": {
+    "title": "Profile",
+    "heroSubtitle": "Your private account and basic profile",
+    "tabAbout": "About me",
+    "tabAccount": "Account",
+    "tabSecurity": "Security",
+    "displayName": "Display name",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "hometown": "Hometown",
+    "maritalStatus": "Marital status",
+    "currentLocation": "Current location",
+    "visibility": "Visibility on public surfaces",
+    "showBirthday": "Show birthday",
+    "showGender": "Show gender",
+    "showMaritalStatus": "Show marital status",
+    "showHometown": "Show hometown",
+    "genderUnset": "Prefer not to say",
+    "maritalUnset": "Not set",
+    "genderMALE": "Male",
+    "genderFEMALE": "Female",
+    "genderNON_BINARY": "Non-binary",
+    "genderOTHER": "Other",
+    "maritalSINGLE": "Single",
+    "maritalMARRIED": "Married",
+    "maritalDIVORCED": "Divorced",
+    "maritalWIDOWED": "Widowed",
+    "maritalPARTNERED": "Partnered",
+    "saveAbout": "Save profile",
+    "saveAccount": "Save account",
+    "accountReadOnlyEmail": "Email",
+    "changeEmail": "Change email",
+    "continueToPersonas": "Continue to personas"
+  },
+  "message": {
+    "onboardingBanner": "Add a display name and any details you want to share. You can change these anytime.",
+    "aboutSuccess": "Profile updated.",
+    "aboutFail": "Could not update profile.",
+    "accountSuccess": "Account updated.",
+    "accountFail": "Could not update account."
+  }
+}

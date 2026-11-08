@@ -23,6 +23,10 @@ export const paths = {
     manage: '/persona',
   },
 
+  profile: {
+    root: '/profile',
+  },
+
   admin: {
     dashboard: '/admin/dashboard',
   },

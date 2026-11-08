@@ -1,0 +1,47 @@
+{
+  "condition": {
+    "displayName": "Vui lòng nhập tên hiển thị.",
+    "username": "Tên đăng nhập phải có ít nhất 3 ký tự."
+  },
+  "label": {
+    "title": "Hồ sơ",
+    "heroSubtitle": "Tài khoản riêng và hồ sơ cơ bản",
+    "tabAbout": "Giới thiệu",
+    "tabAccount": "Tài khoản",
+    "tabSecurity": "Bảo mật",
+    "displayName": "Tên hiển thị",
+    "birthday": "Ngày sinh",
+    "gender": "Giới tính",
+    "hometown": "Quê quán",
+    "maritalStatus": "Tình trạng hôn nhân",
+    "currentLocation": "Vị trí hiện tại",
+    "visibility": "Hiển thị công khai",
+    "showBirthday": "Hiện ngày sinh",
+    "showGender": "Hiện giới tính",
+    "showMaritalStatus": "Hiện tình trạng hôn nhân",
+    "showHometown": "Hiện quê quán",
+    "genderUnset": "Không chọn",
+    "maritalUnset": "Chưa đặt",
+    "genderMALE": "Nam",
+    "genderFEMALE": "Nữ",
+    "genderNON_BINARY": "Phi nhị giới",
+    "genderOTHER": "Khác",
+    "maritalSINGLE": "Độc thân",
+    "maritalMARRIED": "Đã kết hôn",
+    "maritalDIVORCED": "Ly hôn",
+    "maritalWIDOWED": "Goá",
+    "maritalPARTNERED": "Có đối tác",
+    "saveAbout": "Lưu hồ sơ",
+    "saveAccount": "Lưu tài khoản",
+    "accountReadOnlyEmail": "Email",
+    "changeEmail": "Đổi email",
+    "continueToPersonas": "Tiếp tục tới persona"
+  },
+  "message": {
+    "onboardingBanner": "Thêm tên hiển thị và thông tin bạn muốn. Bạn có thể chỉnh sửa bất cứ lúc nào.",
+    "aboutSuccess": "Đã cập nhật hồ sơ.",
+    "aboutFail": "Không thể cập nhật hồ sơ.",
+    "accountSuccess": "Đã cập nhật tài khoản.",
+    "accountFail": "Không thể cập nhật tài khoản."
+  }
+}

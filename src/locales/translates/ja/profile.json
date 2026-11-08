@@ -1,0 +1,47 @@
+{
+  "condition": {
+    "displayName": "表示名を入力してください。",
+    "username": "ユーザー名は3文字以上必要です。"
+  },
+  "label": {
+    "title": "プロフィール",
+    "heroSubtitle": "非公開のアカウントと基本プロフィール",
+    "tabAbout": "自己紹介",
+    "tabAccount": "アカウント",
+    "tabSecurity": "セキュリティ",
+    "displayName": "表示名",
+    "birthday": "誕生日",
+    "gender": "性別",
+    "hometown": "出身地",
+    "maritalStatus": "婚姻状況",
+    "currentLocation": "現在地",
+    "visibility": "公開設定",
+    "showBirthday": "誕生日を公開",
+    "showGender": "性別を公開",
+    "showMaritalStatus": "婚姻状況を公開",
+    "showHometown": "出身地を公開",
+    "genderUnset": "未設定",
+    "maritalUnset": "未設定",
+    "genderMALE": "男性",
+    "genderFEMALE": "女性",
+    "genderNON_BINARY": "ノンバイナリー",
+    "genderOTHER": "その他",
+    "maritalSINGLE": "独身",
+    "maritalMARRIED": "既婚",
+    "maritalDIVORCED": "離婚",
+    "maritalWIDOWED": "死別",
+    "maritalPARTNERED": "パートナーあり",
+    "saveAbout": "プロフィールを保存",
+    "saveAccount": "アカウントを保存",
+    "accountReadOnlyEmail": "メール",
+    "changeEmail": "メールを変更",
+    "continueToPersonas": "ペルソナへ進む"
+  },
+  "message": {
+    "onboardingBanner": "表示名などを入力してください。いつでも変更できます。",
+    "aboutSuccess": "プロフィールを更新しました。",
+    "aboutFail": "プロフィールを更新できませんでした。",
+    "accountSuccess": "アカウントを更新しました。",
+    "accountFail": "アカウントを更新できませんでした。"
+  }
+}

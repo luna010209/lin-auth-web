@@ -13,7 +13,7 @@ export const account = [
   },
   {
     label: 'Profile',
-    href: '#',
+    href: paths.profile.root,
     icon: (
       <SvgIcon>
         <path

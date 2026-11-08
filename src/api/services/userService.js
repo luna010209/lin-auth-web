@@ -97,7 +97,7 @@ export const getCurrentUser = async () => {
 // ✏️ PROFILE — lin-auth-api
 // ======================================================
 
-export function buildChangeInfoRequest({ username, email, displayName, phone }) {
+export function buildAccountUpdateRequest({ username, email, phone }) {
   const normalizedUsername = String(username || '').trim();
   const normalizedEmail = String(email || '').trim();
 
@@ -109,52 +109,110 @@ export function buildChangeInfoRequest({ username, email, displayName, phone }) 
     throw new Error('email is required');
   }
 
-  const normalizedDisplayName =
-    displayName == null || String(displayName).trim() === '' ? null : String(displayName).trim();
-
   const normalizedPhone =
     phone == null || String(phone).trim() === '' ? null : String(phone).trim();
 
   return {
     username: normalizedUsername,
     email: normalizedEmail,
-    displayName: normalizedDisplayName,
     phone: normalizedPhone,
   };
 }
 
-export function buildBasicInfoUpdateRequest({ username, email, displayName, phone }) {
-  const normalizedUsername = String(username || '').trim();
-  const storedEmail = email == null ? '' : String(email);
-
-  if (!normalizedUsername) {
-    throw new Error('username is required');
-  }
-
-  if (!storedEmail) {
-    throw new Error('email is required');
-  }
-
-  const normalizedDisplayName =
-    displayName == null || String(displayName).trim() === '' ? null : String(displayName).trim();
-
-  const normalizedPhone =
-    phone == null || String(phone).trim() === '' ? null : String(phone).trim();
-
-  return {
-    username: normalizedUsername,
-    email: storedEmail,
-    displayName: normalizedDisplayName,
-    phone: normalizedPhone,
-  };
+/** @deprecated Use buildAccountUpdateRequest — account PUT does not accept displayName. */
+export function buildChangeInfoRequest(params) {
+  return buildAccountUpdateRequest(params);
 }
 
-export const updateUserInfo = async (data) => {
-  await authPrivateApi.put('/auth', buildChangeInfoRequest(data));
+/** @deprecated Use buildAccountUpdateRequest */
+export function buildBasicInfoUpdateRequest(params) {
+  return buildAccountUpdateRequest(params);
+}
+
+export const updateAccountInfo = async (data) => {
+  await authPrivateApi.put('/auth', buildAccountUpdateRequest(data));
 };
 
+export const updateUserInfo = async (data) => {
+  await authPrivateApi.put('/auth', buildAccountUpdateRequest(data));
+};
+
+/** @deprecated Use updateAccountInfo */
 export const updateUserBasicInfo = async (data) => {
-  await authPrivateApi.put('/auth', buildBasicInfoUpdateRequest(data));
+  await updateAccountInfo(data);
+};
+
+const GENDER_VALUES = new Set(['MALE', 'FEMALE', 'NON_BINARY', 'OTHER']);
+const MARITAL_VALUES = new Set(['SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED', 'PARTNERED']);
+
+function normalizeEnum(value, allowed) {
+  if (value == null || String(value).trim() === '') return null;
+  const upper = String(value).trim().toUpperCase();
+  return allowed.has(upper) ? upper : null;
+}
+
+function normalizeBirthday(birthday) {
+  if (birthday == null || String(birthday).trim() === '') return null;
+  const raw = String(birthday).trim();
+  if (raw.includes('T')) return raw;
+  return `${raw}T00:00:00`;
+}
+
+export function buildUpdateBasicProfileRequest({
+  displayName,
+  birthday,
+  gender,
+  hometown,
+  maritalStatus,
+  currentLocation,
+  showBirthday,
+  showGender,
+  showMaritalStatus,
+  showHometown,
+}) {
+  const body = {};
+
+  if (displayName !== undefined) {
+    body.displayName =
+      displayName == null || String(displayName).trim() === ''
+        ? null
+        : String(displayName).trim();
+  }
+
+  if (birthday !== undefined) {
+    body.birthday = normalizeBirthday(birthday);
+  }
+
+  if (gender !== undefined) {
+    body.gender = normalizeEnum(gender, GENDER_VALUES);
+  }
+
+  if (hometown !== undefined) {
+    body.hometown =
+      hometown == null || String(hometown).trim() === '' ? null : String(hometown).trim();
+  }
+
+  if (maritalStatus !== undefined) {
+    body.maritalStatus = normalizeEnum(maritalStatus, MARITAL_VALUES);
+  }
+
+  if (currentLocation !== undefined) {
+    body.currentLocation =
+      currentLocation == null || String(currentLocation).trim() === ''
+        ? null
+        : String(currentLocation).trim();
+  }
+
+  if (showBirthday !== undefined) body.showBirthday = !!showBirthday;
+  if (showGender !== undefined) body.showGender = !!showGender;
+  if (showMaritalStatus !== undefined) body.showMaritalStatus = !!showMaritalStatus;
+  if (showHometown !== undefined) body.showHometown = !!showHometown;
+
+  return body;
+}
+
+export const updateBasicProfile = async (data) => {
+  await authPrivateApi.put('/profile', buildUpdateBasicProfileRequest(data));
 };
 
 export const changePassword = async (data) => {
