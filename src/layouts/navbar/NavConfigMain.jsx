@@ -14,7 +14,7 @@ const ICONS = {
 
 export const navData = [
   {
-    subheader: 'Lin Auth',
+    subheader: 'Lin Universe',
     translateKey: 'menu.title',
     items: [
       {

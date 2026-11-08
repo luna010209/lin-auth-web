@@ -4,7 +4,7 @@ import { paths } from './routes/paths';
 // ----------------------------------------------------------------------
 
 export const CONFIG = {
-  appName: 'Lin Auth',
+  appName: 'Lin Universe',
   appVersion: packageJson.version,
   serverUrl: import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8080',
   authServerUrl: import.meta.env.VITE_AUTH_API_URL ?? import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8080',

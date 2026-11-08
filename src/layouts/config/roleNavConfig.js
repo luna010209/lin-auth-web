@@ -15,7 +15,7 @@ const ICONS = {
 
 const ALL_MENU_ITEMS = {
   home: {
-    subheader: 'Lin Auth',
+    subheader: 'Lin Universe',
     translateKey: 'menu.title',
     items: [
       {
