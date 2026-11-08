@@ -8,6 +8,7 @@ const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} />;
 const ICONS = {
   dashboard: icon('ic-dashboard'),
   user: icon('ic-user'),
+  profile: icon('ic-user'),
 };
 
 // ----------------------------------------------------------------------
@@ -22,6 +23,12 @@ export const navData = [
         translateKey: 'menu.home',
         path: paths.main.home,
         icon: ICONS.dashboard,
+      },
+      {
+        title: 'Personas',
+        translateKey: 'menu.personas',
+        path: paths.persona.manage,
+        icon: ICONS.profile,
       },
     ],
   },

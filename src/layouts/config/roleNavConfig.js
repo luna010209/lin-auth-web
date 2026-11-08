@@ -24,6 +24,12 @@ const ALL_MENU_ITEMS = {
         path: paths.main.home,
         icon: ICONS.dashboard,
       },
+      {
+        title: 'Personas',
+        translateKey: 'menu.personas',
+        path: paths.persona.manage,
+        icon: ICONS.dashboard,
+      },
     ],
   },
 };

@@ -7,6 +7,7 @@ import { paths } from '../paths';
 // ----------------------------------------------------------------------
 
 const HomePage = lazy(() => import('src/pages/home/Home'));
+const PersonaManagePage = lazy(() => import('src/pages/persona/Manage'));
 
 /** Private paths: auth required */
 export const privateRoutes = [
@@ -17,6 +18,9 @@ export const privateRoutes = [
       </AuthGuard>
     ),
     loader: createPermissionLoader,
-    children: [{ path: paths.main.home, element: <HomePage /> }],
+    children: [
+      { path: paths.main.home, element: <HomePage /> },
+      { path: paths.persona.manage, element: <PersonaManagePage /> },
+    ],
   },
 ];

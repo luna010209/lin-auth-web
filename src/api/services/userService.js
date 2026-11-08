@@ -25,7 +25,6 @@ export function buildSignUpRequest(data) {
   return {
     username: data.username,
     email: data.email,
-    displayName: data.displayName ?? data.nickname,
     phone: data.phone,
     password: data.password,
     cfPassword: data.cfPassword,

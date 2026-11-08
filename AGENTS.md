@@ -28,7 +28,8 @@ Framework-only tree (no Lin Langa product modules):
 - `src/auth`, `src/theme`, `src/components`, `src/layouts`, `src/routes`, `src/locales`
 - `src/sections/auth`, `src/sections/error`
 - `src/pages/auth`, `src/pages/home`, `src/pages/error`
-- `src/api/axios.js`, `src/api/services/userService.js`
+- `src/api/axios.js`, `src/api/services/userService.js`, `src/api/services/personaService.js`
+- `src/sections/persona`, `src/pages/persona` — persona manage (`GET/POST/DELETE /persona`)
 
 ## Development Notes
 

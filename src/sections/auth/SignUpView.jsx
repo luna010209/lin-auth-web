@@ -54,7 +54,6 @@ export function SignUpView() {
       username: '',
       email: '',
       verifyCode: '',
-      nickname: '',
       phone: '',
       password: '',
       cfPassword: '',
@@ -121,7 +120,6 @@ export function SignUpView() {
 
       await signUp({
         username: data.username,
-        nickname: data.nickname,
         email: data.email,
         phone: data.phone,
         password: data.password,
@@ -148,8 +146,6 @@ export function SignUpView() {
   const renderForm = () => (
     <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
       <Field.Text name="username" label={l('username')} />
-
-      <Field.Text name="nickname" label={l('nickname')} />
 
       <Field.Phone
         name="phone"

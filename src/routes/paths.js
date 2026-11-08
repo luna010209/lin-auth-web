@@ -19,6 +19,10 @@ export const paths = {
     home: '/home',
   },
 
+  persona: {
+    manage: '/persona',
+  },
+
   admin: {
     dashboard: '/admin/dashboard',
   },

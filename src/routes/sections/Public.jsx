@@ -5,6 +5,6 @@ import { paths } from '../paths';
 export const publicRoutes = [
   {
     path: '/',
-    element: <Navigate to={paths.main.home} replace />,
+    element: <Navigate to={paths.persona.manage} replace />,
   },
 ];

@@ -6,7 +6,6 @@ export const createSignUpSchema = (c) =>
       username: zod.string().min(3, { message: c('username') }),
       email: zod.string().min(1, { message: c('email') }).email({ message: c('emailInvalid') }),
       verifyCode: zod.string().min(1, { message: c('verifyCode') }),
-      nickname: zod.string().min(1, { message: c('nickname') }),
       phone: zod.string().min(1, { message: c('phone') }),
       password: zod.string().min(6, { message: c('password') }),
       cfPassword: zod.string().min(1, { message: c('cfPassword') }),

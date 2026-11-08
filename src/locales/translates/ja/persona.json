@@ -1,0 +1,25 @@
+{
+  "label": {
+    "title": "Personas",
+    "manage": "Manage personas",
+    "create": "Create persona",
+    "displayName": "Display name",
+    "headline": "Headline",
+    "bio": "Bio",
+    "location": "Location",
+    "createdAt": "Created",
+    "actions": "Actions",
+    "delete": "Delete",
+    "refresh": "Refresh",
+    "emptyTitle": "No personas yet",
+    "emptyDescription": "Create a persona to represent you on Lin products."
+  },
+  "message": {
+    "loadFail": "Could not load personas.",
+    "createSuccess": "Persona created.",
+    "createFail": "Could not create persona.",
+    "deleteSuccess": "Persona deleted.",
+    "deleteFail": "Could not delete persona.",
+    "deleteConfirm": "Delete this persona? This cannot be undone."
+  }
+}

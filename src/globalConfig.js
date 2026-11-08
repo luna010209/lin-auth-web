@@ -17,7 +17,7 @@ export const CONFIG = {
   auth: {
     method: 'jwt',
     skip: false,
-    redirectPath: paths.main.home,
+    redirectPath: paths.persona.manage,
   },
   firebase: {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY ?? '',
