@@ -1,0 +1,22 @@
+{
+  "field": {
+    "upload": {
+      "title": "拖放或选择文件",
+      "description": "将文件拖到此处，或点击 {browse} 从您的电脑中选择。",
+      "browse": "浏览",
+      "removeAll": "全部删除",
+      "upload": "上传"
+    }
+  },
+  "add": "添加",
+  "edit": "编辑",
+  "save": "保存",
+  "cancel": "取消",
+  "close": "关闭",
+  "reset": "重置",
+  "delete": "删除",
+  "confirm": "确认",
+  "saving": "保存中...",
+  "select": "选择",
+  "pleaseWait": "请稍候……请不要刷新页面。"
+}

@@ -1,0 +1,24 @@
+{
+    "notFound": {
+        "notFoundTitle": "NOT FOUND",
+        "title": "Sorry, page not found!",
+        "description": "Sorry, we couldn’t find the page you’re looking for.",
+        "home": "Go to home"
+    },
+    "notAllowed": {
+        "notAllowedTitle": "NOT ALLOWED",
+        "title": "Access not allowed",
+        "description": "The page you’re trying to access has restricted access. Please refer to your system administrator.",
+        "home": "Go back"
+    },
+    "sessionStale": {
+        "title": "Session outdated",
+        "description": "Your account has admin access, but your login token was issued before that role was granted. Please sign in again.",
+        "home": "Sign in again"
+    },
+    "noData": {
+        "title": "No data available",
+        "description": "Sorry, there is no data to display."
+    },
+    "needHelp": "Need Help?"
+}

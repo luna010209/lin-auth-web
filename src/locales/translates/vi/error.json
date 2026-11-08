@@ -1,0 +1,24 @@
+{
+  "notFound": {
+    "notFoundTitle": "KHÔNG TÌM THẤY",
+    "title": "Xin lỗi, không tìm thấy trang!",
+    "description": "Chúng tôi không thể tìm thấy trang bạn đang tìm kiếm.",
+    "home": "Về trang chủ"
+  },
+  "notAllowed": {
+    "notAllowedTitle": "KHÔNG ĐƯỢC PHÉP",
+    "title": "Không được phép truy cập",
+    "description": "Trang bạn đang truy cập bị hạn chế. Vui lòng liên hệ quản trị hệ thống.",
+    "home": "Quay lại"
+  },
+  "sessionStale": {
+    "title": "Phiên đăng nhập đã cũ",
+    "description": "Tài khoản của bạn có quyền admin, nhưng token đăng nhập được cấp trước khi gán quyền này. Vui lòng đăng nhập lại.",
+    "home": "Đăng nhập lại"
+  },
+  "noData": {
+    "title": "Không có dữ liệu",
+    "description": "Xin lỗi, không có dữ liệu để hiển thị."
+  },
+  "needHelp": "Bạn cần hỗ trợ?"
+}

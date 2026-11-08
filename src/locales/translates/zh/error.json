@@ -1,0 +1,24 @@
+{
+  "notFound": {
+    "notFoundTitle": "未找到页面",
+    "title": "抱歉，未找到该页面！",
+    "description": "我们无法找到您正在寻找的页面。",
+    "home": "返回首页"
+  },
+  "notAllowed": {
+    "notAllowedTitle": "禁止访问",
+    "title": "无访问权限",
+    "description": "您正在访问的页面受限。请联系系统管理员。",
+    "home": "返回"
+  },
+  "sessionStale": {
+    "title": "会话已过期",
+    "description": "您的账户已有管理员权限，但登录令牌是在授予该权限之前签发的。请重新登录。",
+    "home": "重新登录"
+  },
+  "noData": {
+    "title": "没有可用数据",
+    "description": "抱歉，没有数据可显示。"
+  },
+  "needHelp": "需要帮助吗？"
+}

@@ -1,0 +1,22 @@
+{
+  "field": {
+    "upload": {
+      "title": "Thả hoặc chọn tệp",
+      "description": "Thả tệp vào đây hoặc nhấp để {browse} từ máy của bạn.",
+      "browse": "duyệt",
+      "removeAll": "Xóa tất cả",
+      "upload": "Tải lên"
+    }
+  },
+  "add": "Thêm",
+  "edit": "Chỉnh sửa",
+  "save": "Lưu",
+  "cancel": "Hủy",
+  "close": "Đóng",
+  "reset": "Đặt lại",
+  "delete": "Xóa",
+  "confirm": "Xác nhận",
+  "saving": "Đang lưu...",
+  "select": "Chọn",
+  "pleaseWait": "Vui lòng chờ... Đừng tải lại trang."
+}

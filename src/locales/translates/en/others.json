@@ -1,0 +1,22 @@
+{
+  "field": {
+    "upload": {
+      "title": "Drop or select file",
+      "description": "Drop files here or click to {browse} through your machine.",
+      "browse": "browse",
+      "removeAll": "Remove all",
+      "upload": "Upload"
+    }
+  },
+  "add": "Add",
+  "edit": "Edit",
+  "save": "Save",
+  "cancel": "Cancel",
+  "close": "Close",
+  "reset": "Reset",
+  "delete": "Delete",
+  "confirm": "Confirm",
+  "saving": "Saving...",
+  "select": "Select",
+  "pleaseWait": "Please wait... Don't reload."
+}
