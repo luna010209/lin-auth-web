@@ -20,6 +20,8 @@
     "createFail": "Could not create persona.",
     "deleteSuccess": "Persona deleted.",
     "deleteFail": "Could not delete persona.",
-    "deleteConfirm": "Delete this persona? This cannot be undone."
+    "deleteConfirm": "Delete this persona? This cannot be undone.",
+    "deleteLastHint": "Bạn phải giữ ít nhất một persona.",
+    "deleteLastFail": "Bạn phải giữ ít nhất một persona."
   }
 }

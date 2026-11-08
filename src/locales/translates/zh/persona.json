@@ -20,6 +20,8 @@
     "createFail": "Could not create persona.",
     "deleteSuccess": "Persona deleted.",
     "deleteFail": "Could not delete persona.",
-    "deleteConfirm": "Delete this persona? This cannot be undone."
+    "deleteConfirm": "Delete this persona? This cannot be undone.",
+    "deleteLastHint": "您必须保留至少一个 persona。",
+    "deleteLastFail": "您必须保留至少一个 persona。"
   }
 }

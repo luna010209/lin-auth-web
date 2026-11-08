@@ -86,6 +86,8 @@ export function PersonaManageView() {
     [loadPersonas, m]
   );
 
+  const isLastPersona = rows.length === 1;
+
   const columns = useMemo(
     () => [
       { field: 'id', headerName: 'ID', width: 80 },
@@ -108,15 +110,17 @@ export function PersonaManageView() {
           <IconButton
             size="small"
             color="error"
+            disabled={isLastPersona}
             onClick={() => handleDelete(params.row.id)}
             aria-label={l('delete')}
+            title={isLastPersona ? m('deleteLastHint') : undefined}
           >
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         ),
       },
     ],
-    [handleDelete, l]
+    [handleDelete, isLastPersona, l, m]
   );
 
   const onCreate = methods.handleSubmit(async (data) => {

@@ -20,6 +20,8 @@
     "createFail": "Could not create persona.",
     "deleteSuccess": "Persona deleted.",
     "deleteFail": "Could not delete persona.",
-    "deleteConfirm": "Delete this persona? This cannot be undone."
+    "deleteConfirm": "Delete this persona? This cannot be undone.",
+    "deleteLastHint": "최소 하나의 페르소나는 유지해야 합니다.",
+    "deleteLastFail": "최소 하나의 페르소나는 유지해야 합니다."
   }
 }
