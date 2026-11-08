@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { enqueueSnackbar } from 'notistack';
 
@@ -7,8 +7,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import MenuItem from '@mui/material/MenuItem';
-import Stack from '@mui/material/Stack';
-
 import { Form } from '../../components/hookForm/FormProvider';
 import { Field } from '../../components/hookForm/Fields';
 import { getApiErrorMessage } from '../../api/axios';
@@ -24,35 +22,46 @@ import { ProfileLocationField } from './ProfileLocationField';
 const GENDERS = ['', 'MALE', 'FEMALE', 'NON_BINARY', 'OTHER'];
 const MARITAL = ['', 'SINGLE', 'MARRIED', 'DIVORCED', 'WIDOWED', 'PARTNERED'];
 
-function ProfileFieldWithVisibility({ children, switchName, switchLabel }) {
+/** Fixed visibility column so public/private label length does not resize inputs (md+). */
+const VISIBILITY_COLUMN_WIDTH = 228;
+
+function ProfileVisibilitySwitch({ switchName, labelPublic, labelPrivate }) {
+  const { control } = useFormContext();
+  const isPublic = useWatch({ control, name: switchName });
+  const switchLabel = isPublic ? labelPublic : labelPrivate;
+
   return (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
-        alignItems: { xs: 'stretch', md: 'flex-start' },
-        gap: { xs: 0.5, md: 2 },
+        alignItems: 'center',
+        width: 1,
+        minHeight: { xs: 40, md: 56 },
+        pl: { xs: 0.5, md: 0 },
       }}
     >
-      <Box sx={{ flex: 1, minWidth: 0 }}>{children}</Box>
-      <Box
+      <Field.Switch
+        name={switchName}
+        label={switchLabel}
+        labelPlacement="start"
         sx={{
-          flexShrink: 0,
-          display: 'flex',
-          alignItems: 'center',
-          minHeight: { md: 56 },
-          pl: { xs: 0.5, md: 0 },
+          m: 0,
+          width: 1,
+          mx: 0,
+          justifyContent: 'space-between',
+          gap: 0.5,
+          '& .MuiFormControlLabel-label': {
+            flex: 1,
+            minWidth: 0,
+            typography: 'body2',
+            lineHeight: 1.35,
+            whiteSpace: 'normal',
+          },
         }}
-      >
-        <Field.Switch
-          name={switchName}
-          label={switchLabel}
-          sx={{ m: 0 }}
-          slotProps={{
-            wrapper: { sx: { width: 1 } },
-          }}
-        />
-      </Box>
+        slotProps={{
+          wrapper: { sx: { width: 1 } },
+        }}
+      />
     </Box>
   );
 }
@@ -122,16 +131,37 @@ export function ProfileAboutPanel({ embedded = false, onSaved }) {
     }
   });
 
+  const labelPublic = l('visibilityPublic');
+  const labelPrivate = l('visibilityPrivate');
+
   const formBody = (
       <Form methods={methods} onSubmit={onSubmit}>
-        <Stack spacing={2.5}>
-          <Field.Text name="displayName" label={l('displayName')} />
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              md: `minmax(0, 1fr) ${VISIBILITY_COLUMN_WIDTH}px`,
+            },
+            columnGap: { xs: 0, md: 2 },
+            rowGap: 2.5,
+            alignItems: 'start',
+          }}
+        >
+          <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' }, minWidth: 0 }}>
+            <Field.Text name="displayName" label={l('displayName')} />
+          </Box>
 
-          <ProfileFieldWithVisibility switchName="showBirthday" switchLabel={l('showBirthday')}>
+          <Box sx={{ minWidth: 0 }}>
             <Field.DatePicker name="birthday" label={l('birthday')} />
-          </ProfileFieldWithVisibility>
+          </Box>
+          <ProfileVisibilitySwitch
+            switchName="showBirthday"
+            labelPublic={labelPublic}
+            labelPrivate={labelPrivate}
+          />
 
-          <ProfileFieldWithVisibility switchName="showGender" switchLabel={l('showGender')}>
+          <Box sx={{ minWidth: 0 }}>
             <Field.Select name="gender" label={l('gender')}>
               {GENDERS.map((value) => (
                 <MenuItem key={value || 'unset'} value={value}>
@@ -139,9 +169,14 @@ export function ProfileAboutPanel({ embedded = false, onSaved }) {
                 </MenuItem>
               ))}
             </Field.Select>
-          </ProfileFieldWithVisibility>
+          </Box>
+          <ProfileVisibilitySwitch
+            switchName="showGender"
+            labelPublic={labelPublic}
+            labelPrivate={labelPrivate}
+          />
 
-          <ProfileFieldWithVisibility switchName="showMaritalStatus" switchLabel={l('showMaritalStatus')}>
+          <Box sx={{ minWidth: 0 }}>
             <Field.Select name="maritalStatus" label={l('maritalStatus')}>
               {MARITAL.map((value) => (
                 <MenuItem key={value || 'unset'} value={value}>
@@ -149,18 +184,32 @@ export function ProfileAboutPanel({ embedded = false, onSaved }) {
                 </MenuItem>
               ))}
             </Field.Select>
-          </ProfileFieldWithVisibility>
+          </Box>
+          <ProfileVisibilitySwitch
+            switchName="showMaritalStatus"
+            labelPublic={labelPublic}
+            labelPrivate={labelPrivate}
+          />
 
-          <ProfileFieldWithVisibility switchName="showHometown" switchLabel={l('showHometown')}>
+          <Box sx={{ minWidth: 0 }}>
             <Field.Text name="hometown" label={l('hometown')} />
-          </ProfileFieldWithVisibility>
+          </Box>
+          <ProfileVisibilitySwitch
+            switchName="showHometown"
+            labelPublic={labelPublic}
+            labelPrivate={labelPrivate}
+          />
 
-          <ProfileLocationField name="currentLocation" />
+          <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' }, minWidth: 0 }}>
+            <ProfileLocationField name="currentLocation" />
+          </Box>
 
-          <Button type="submit" variant="contained" size="large" disabled={saving} sx={{ alignSelf: 'flex-start' }}>
-            {saving ? tAuth('label.saving') : l('saveAbout')}
-          </Button>
-        </Stack>
+          <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' } }}>
+            <Button type="submit" variant="contained" size="large" disabled={saving} sx={{ alignSelf: 'flex-start' }}>
+              {saving ? tAuth('label.saving') : l('saveAbout')}
+            </Button>
+          </Box>
+        </Box>
       </Form>
   );
 
