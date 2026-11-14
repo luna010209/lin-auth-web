@@ -64,7 +64,9 @@
     "feedbackList": "Phản hồi của tôi",
     "feedbackAdmin": "Quản lý phản hồi",
     "material": "Tài liệu học tập",
-    "chats": "Gia sư AI"
+    "chats": "Gia sư AI",
+    "personas": "Profile công khai",
+    "profile": "Thông tin tài khoản"
   },
   "close": "Đóng",
   "save": "Lưu",

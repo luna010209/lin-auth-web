@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { AuthGuard } from '../../auth/guard';
+import { PersonaOnboardingGuard } from '../../auth/guard/PersonaOnboardingGuard';
 import { ProfileCompletionGuard } from '../../auth/guard/ProfileCompletionGuard';
 import { createPermissionLoader } from '../permissions';
 import PrivateLayout from './layout/PrivateLayout';
@@ -17,7 +18,9 @@ export const privateRoutes = [
     element: (
       <AuthGuard>
         <ProfileCompletionGuard>
-          <PrivateLayout />
+          <PersonaOnboardingGuard>
+            <PrivateLayout />
+          </PersonaOnboardingGuard>
         </ProfileCompletionGuard>
       </AuthGuard>
     ),

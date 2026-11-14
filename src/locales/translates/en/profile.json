@@ -4,8 +4,8 @@
     "username": "Username must be at least 3 characters."
   },
   "label": {
-    "title": "Profile",
-    "heroSubtitle": "Your private account and basic profile",
+    "title": "Account information",
+    "heroSubtitle": "Private details tied to your login — not the same as your public profile",
     "tabAbout": "About me",
     "tabAccount": "Account",
     "tabSecurity": "Security",
@@ -16,7 +16,7 @@
     "maritalStatus": "Marital status",
     "currentLocation": "Current location",
     "locationSearchPlaceholder": "Search address or place",
-    "locationSearchHelper": "Search below or use your current location. Saved to your profile as text.",
+    "locationSearchHelper": "Search below or use your current location. Saved to your account information as text.",
     "useMyLocation": "Use my location",
     "visibilityPublic": "Public",
     "visibilityPrivate": "Only me",
@@ -31,16 +31,16 @@
     "maritalDIVORCED": "Divorced",
     "maritalWIDOWED": "Widowed",
     "maritalPARTNERED": "Partnered",
-    "saveAbout": "Save profile",
+    "saveAbout": "Save information",
     "saveAccount": "Save account",
     "accountReadOnlyEmail": "Email",
     "changeEmail": "Change email",
-    "continueToPersonas": "Continue to personas"
+    "continueToPersonas": "Continue to public profile"
   },
   "message": {
-    "onboardingBanner": "Add a display name and any details you want to share. You can change these anytime.",
-    "aboutSuccess": "Profile updated.",
-    "aboutFail": "Could not update profile.",
+    "onboardingBanner": "Add a display name and basic account details. You will create a separate public profile next.",
+    "aboutSuccess": "Account information updated.",
+    "aboutFail": "Could not update account information.",
     "accountSuccess": "Account updated.",
     "accountFail": "Could not update account.",
     "mapLoadFail": "Could not load Google Maps. Check your API key and enabled APIs.",

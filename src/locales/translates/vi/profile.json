@@ -4,8 +4,8 @@
     "username": "Tên đăng nhập phải có ít nhất 3 ký tự."
   },
   "label": {
-    "title": "Hồ sơ",
-    "heroSubtitle": "Tài khoản riêng và hồ sơ cơ bản",
+    "title": "Thông tin tài khoản",
+    "heroSubtitle": "Thông tin riêng gắn với tài khoản đăng nhập — không hiển thị công khai như profile",
     "tabAbout": "Giới thiệu",
     "tabAccount": "Tài khoản",
     "tabSecurity": "Bảo mật",
@@ -16,7 +16,7 @@
     "maritalStatus": "Tình trạng hôn nhân",
     "currentLocation": "Vị trí hiện tại",
     "locationSearchPlaceholder": "Tìm địa chỉ hoặc địa điểm",
-    "locationSearchHelper": "Tìm kiếm hoặc dùng vị trí hiện tại. Lưu vào hồ sơ dưới dạng văn bản.",
+    "locationSearchHelper": "Tìm kiếm hoặc dùng vị trí hiện tại. Lưu vào thông tin tài khoản dưới dạng văn bản.",
     "useMyLocation": "Dùng vị trí của tôi",
     "visibilityPublic": "Hiển thị công khai",
     "visibilityPrivate": "Chỉ mình tôi",
@@ -31,16 +31,16 @@
     "maritalDIVORCED": "Ly hôn",
     "maritalWIDOWED": "Goá",
     "maritalPARTNERED": "Có đối tác",
-    "saveAbout": "Lưu hồ sơ",
+    "saveAbout": "Lưu thông tin",
     "saveAccount": "Lưu tài khoản",
     "accountReadOnlyEmail": "Email",
     "changeEmail": "Đổi email",
-    "continueToPersonas": "Tiếp tục tới persona"
+    "continueToPersonas": "Tiếp tục tới profile công khai"
   },
   "message": {
-    "onboardingBanner": "Thêm tên hiển thị và thông tin bạn muốn. Bạn có thể chỉnh sửa bất cứ lúc nào.",
-    "aboutSuccess": "Đã cập nhật hồ sơ.",
-    "aboutFail": "Không thể cập nhật hồ sơ.",
+    "onboardingBanner": "Thêm tên hiển thị và thông tin cơ bản cho tài khoản. Sau đó bạn sẽ tạo profile công khai riêng.",
+    "aboutSuccess": "Đã cập nhật thông tin tài khoản.",
+    "aboutFail": "Không thể cập nhật thông tin tài khoản.",
     "accountSuccess": "Đã cập nhật tài khoản.",
     "accountFail": "Không thể cập nhật tài khoản.",
     "mapLoadFail": "Không tải được Google Maps. Kiểm tra API key và các API đã bật.",

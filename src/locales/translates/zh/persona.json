@@ -3,6 +3,7 @@
     "title": "Personas",
     "manage": "Manage personas",
     "create": "Create persona",
+    "cancel": "取消",
     "displayName": "Display name",
     "headline": "Headline",
     "bio": "Bio",
@@ -12,9 +13,17 @@
     "delete": "Delete",
     "refresh": "Refresh",
     "emptyTitle": "No personas yet",
-    "emptyDescription": "Create a persona to represent you on Lin products."
+    "emptyDescription": "Create a persona to represent you on Lin products.",
+    "onboardingTitle": "创建第一个 persona",
+    "avatar": "头像",
+    "avatarUpload": "上传照片",
+    "avatarUpdate": "更换照片",
+    "creating": "创建中..."
   },
   "message": {
+    "onboardingBanner": "使用 Lin 产品至少需要一个人 persona。现在创建，之后可以添加更多。",
+    "onboardingHint": "这是您在 Lin 上的公开身份。可添加照片并随时编辑。",
+    "avatarHelper": "请上传照片（仅支持 JPEG、PNG、JPG 或 WebP）。",
     "loadFail": "Could not load personas.",
     "createSuccess": "Persona created.",
     "createFail": "Could not create persona.",

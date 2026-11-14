@@ -1,8 +1,9 @@
 {
   "label": {
-    "title": "Personas",
-    "manage": "Manage personas",
-    "create": "Create persona",
+    "title": "Public profile",
+    "manage": "Manage profile",
+    "create": "Create public profile",
+    "cancel": "Cancel",
     "displayName": "Display name",
     "headline": "Headline",
     "bio": "Bio",
@@ -12,9 +13,17 @@
     "delete": "Delete",
     "refresh": "Refresh",
     "emptyTitle": "No personas yet",
-    "emptyDescription": "Create a persona to represent you on Lin products."
+    "emptyDescription": "Create a persona to represent you on Lin products.",
+    "onboardingTitle": "Create your first persona",
+    "avatar": "Avatar",
+    "avatarUpload": "Upload photo",
+    "avatarUpdate": "Update photo",
+    "creating": "Creating..."
   },
   "message": {
+    "onboardingBanner": "You need at least one public profile. This is what others see — it is not created automatically from account info.",
+    "onboardingHint": "Public profile is separate from account information (email, password, private fields). Choose what you show to everyone.",
+    "avatarHelper": "Upload a photo (JPEG, PNG, JPG, or WebP only).",
     "loadFail": "Could not load personas.",
     "createSuccess": "Persona created.",
     "createFail": "Could not create persona.",

@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z as zod } from 'zod';
 import { enqueueSnackbar } from 'notistack';
 
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -23,8 +24,13 @@ import { Form } from '../../components/hookForm/FormProvider';
 import { Field } from '../../components/hookForm/Fields';
 import { getApiErrorMessage } from '../../api/axios';
 import { createPersona, deletePersona, fetchPersonas } from '../../api/services/personaService';
+import { useAuthContext } from '../../auth/hooks';
+import { useRouter } from '../../routes/hooks/useRouter';
+import { useSearchParams } from '../../routes/hooks/useSearchParams';
+import { paths } from '../../routes/paths';
 import { useTranslate } from '../../locales';
 import { formatDateTime } from '../../utils/formatTime';
+import { fileToApiByteArray } from '../../utils/fileBytes';
 
 // ----------------------------------------------------------------------
 
@@ -33,12 +39,24 @@ const createSchema = zod.object({
   headline: zod.string().max(255).optional(),
   bio: zod.string().max(5000).optional(),
   location: zod.string().max(150).optional(),
+  avatar: zod
+    .custom((value) => value == null || value instanceof File, {
+      message: 'Invalid avatar file',
+    })
+    .optional()
+    .nullable(),
 });
 
 export function PersonaManageView() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { user } = useAuthContext();
   const { t } = useTranslate('persona');
   const l = useCallback((key) => t(`label.${key}`), [t]);
   const m = useCallback((key) => t(`message.${key}`), [t]);
+
+  const onboarding = searchParams?.get('onboarding') === '1';
+  const onboardingDialogShown = useRef(false);
 
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,8 +70,20 @@ export function PersonaManageView() {
       headline: '',
       bio: '',
       location: '',
+      avatar: null,
     },
   });
+
+  const openCreateDialog = useCallback(() => {
+    methods.reset({
+      displayName: user?.displayName?.trim() || '',
+      headline: '',
+      bio: '',
+      location: user?.currentLocation?.trim() || '',
+      avatar: null,
+    });
+    setCreateOpen(true);
+  }, [methods, user?.currentLocation, user?.displayName]);
 
   const loadPersonas = useCallback(async () => {
     try {
@@ -71,6 +101,16 @@ export function PersonaManageView() {
   useEffect(() => {
     loadPersonas();
   }, [loadPersonas]);
+
+  useEffect(() => {
+    if (!onboarding || loading || onboardingDialogShown.current) {
+      return;
+    }
+    if (rows.length === 0) {
+      onboardingDialogShown.current = true;
+      openCreateDialog();
+    }
+  }, [loading, onboarding, openCreateDialog, rows.length]);
 
   const handleDelete = useCallback(
     async (id) => {
@@ -124,11 +164,15 @@ export function PersonaManageView() {
   );
 
   const onCreate = methods.handleSubmit(async (data) => {
+    const avatarBytes =
+      data.avatar instanceof File ? await fileToApiByteArray(data.avatar) : null;
+
     const body = {
       displayName: data.displayName?.trim() || null,
       headline: data.headline?.trim() || null,
       bio: data.bio?.trim() || null,
       location: data.location?.trim() || null,
+      ...(avatarBytes ? { avatar: avatarBytes } : {}),
     };
 
     try {
@@ -138,6 +182,9 @@ export function PersonaManageView() {
       setCreateOpen(false);
       methods.reset();
       await loadPersonas();
+      if (onboarding) {
+        router.replace(paths.persona.manage);
+      }
     } catch (error) {
       enqueueSnackbar(getApiErrorMessage(error, m('createFail')), { variant: 'error' });
     } finally {
@@ -150,6 +197,12 @@ export function PersonaManageView() {
       <PageDocumentTitle title={l('title')} />
 
       <Box sx={{ p: { xs: 2, md: 3 } }}>
+        {onboarding && rows.length === 0 && !loading && (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            {m('onboardingBanner')}
+          </Alert>
+        )}
+
         <Stack
           direction="row"
           spacing={0}
@@ -162,7 +215,7 @@ export function PersonaManageView() {
             </Button>
             <Button
               variant="contained"
-              onClick={() => setCreateOpen(true)}
+              onClick={openCreateDialog}
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
               {l('create')}
@@ -172,7 +225,23 @@ export function PersonaManageView() {
 
         <Card sx={{ height: 480 }}>
           {!loading && rows.length === 0 ? (
-            <EmptyContent filled title={l('emptyTitle')} description={l('emptyDescription')} sx={{ py: 10 }} />
+            <EmptyContent
+              filled
+              title={l('emptyTitle')}
+              description={l('emptyDescription')}
+              sx={{ py: 10 }}
+              action={
+                <Box sx={{ mt: 4 }}>
+                  <Button
+                    variant="contained"
+                    onClick={openCreateDialog}
+                    startIcon={<Iconify icon="mingcute:add-line" />}
+                  >
+                    {l('create')}
+                  </Button>
+                </Box>
+              }
+            />
           ) : (
             <DataGrid
               rows={rows}
@@ -187,21 +256,51 @@ export function PersonaManageView() {
         </Card>
       </Box>
 
-      <Dialog open={createOpen} onClose={() => !saving && setCreateOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{l('create')}</DialogTitle>
+      <Dialog
+        open={createOpen}
+        onClose={() => {
+          if (saving) return;
+          if (onboarding && rows.length === 0) return;
+          setCreateOpen(false);
+        }}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>{onboarding && rows.length === 0 ? l('onboardingTitle') : l('create')}</DialogTitle>
         <Form methods={methods} onSubmit={onCreate}>
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
+            {onboarding && rows.length === 0 && (
+              <Typography variant="body2" color="text.secondary">
+                {m('onboardingHint')}
+              </Typography>
+            )}
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="subtitle2" sx={{ alignSelf: 'flex-start' }}>
+                {l('avatar')}
+              </Typography>
+              <Field.UploadAvatar
+                name="avatar"
+                helperText={m('avatarHelper')}
+                uploadCaption={l('avatarUpload')}
+                updateCaption={l('avatarUpdate')}
+                accept={{ 'image/jpeg': [], 'image/png': [], 'image/webp': [] }}
+              />
+            </Box>
+
             <Field.Text name="displayName" label={l('displayName')} />
             <Field.Text name="headline" label={l('headline')} />
             <Field.Text name="location" label={l('location')} />
             <Field.Text name="bio" label={l('bio')} multiline rows={4} />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setCreateOpen(false)} disabled={saving}>
-              {t('others:cancel')}
-            </Button>
+            {!(onboarding && rows.length === 0) && (
+              <Button onClick={() => setCreateOpen(false)} disabled={saving}>
+                {l('cancel')}
+              </Button>
+            )}
             <Button type="submit" variant="contained" disabled={saving}>
-              {l('create')}
+              {saving ? l('creating') : l('create')}
             </Button>
           </DialogActions>
         </Form>

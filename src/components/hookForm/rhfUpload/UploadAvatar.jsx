@@ -12,7 +12,17 @@ import { Iconify } from '../../iconify';
 
 // ----------------------------------------------------------------------
 
-export function UploadAvatar({ sx, error, value, disabled, helperText, className, ...other }) {
+export function UploadAvatar({
+  sx,
+  error,
+  value,
+  disabled,
+  helperText,
+  className,
+  uploadCaption = 'Upload photo',
+  updateCaption = 'Update photo',
+  ...other
+}) {
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
     multiple: false,
     disabled,
@@ -86,7 +96,7 @@ export function UploadAvatar({ sx, error, value, disabled, helperText, className
     >
       <Iconify icon="solar:camera-add-bold" width={32} />
 
-      <Typography variant="caption">{hasFile ? 'Update photo' : 'Upload photo'}</Typography>
+      <Typography variant="caption">{hasFile ? updateCaption : uploadCaption}</Typography>
     </Box>
   );
 

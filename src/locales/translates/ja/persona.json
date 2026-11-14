@@ -3,6 +3,7 @@
     "title": "Personas",
     "manage": "Manage personas",
     "create": "Create persona",
+    "cancel": "キャンセル",
     "displayName": "Display name",
     "headline": "Headline",
     "bio": "Bio",
@@ -12,9 +13,17 @@
     "delete": "Delete",
     "refresh": "Refresh",
     "emptyTitle": "No personas yet",
-    "emptyDescription": "Create a persona to represent you on Lin products."
+    "emptyDescription": "Create a persona to represent you on Lin products.",
+    "onboardingTitle": "最初のペルソナを作成",
+    "avatar": "アバター",
+    "avatarUpload": "写真をアップロード",
+    "avatarUpdate": "写真を変更",
+    "creating": "作成中..."
   },
   "message": {
+    "onboardingBanner": "Lin の製品を使うにはペルソナが最低1つ必要です。今作成し、あとから追加できます。",
+    "onboardingHint": "Lin での公開アイデンティティです。写真を追加し、いつでも編集できます。",
+    "avatarHelper": "写真をアップロードしてください（JPEG、PNG、JPG、WebPのみ）。",
     "loadFail": "Could not load personas.",
     "createSuccess": "Persona created.",
     "createFail": "Could not create persona.",

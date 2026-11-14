@@ -52,7 +52,7 @@ export function ProfileView() {
     try {
       const sessionUser = JSON.parse(getStoredUserJson() || 'null');
       if (!isProfileIncomplete(sessionUser)) {
-        router.push(paths.persona.manage);
+        router.push(`${paths.persona.manage}?onboarding=1`);
       }
     } catch {
       // ignore
@@ -135,7 +135,7 @@ export function ProfileView() {
               <Button
                 variant="contained"
                 color="inherit"
-                onClick={() => router.push(paths.persona.manage)}
+                onClick={() => router.push(`${paths.persona.manage}?onboarding=1`)}
                 sx={{ bgcolor: 'background.paper', flexShrink: 0 }}
               >
                 {l('continueToPersonas')}
