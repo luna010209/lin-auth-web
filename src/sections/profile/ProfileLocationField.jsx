@@ -33,6 +33,26 @@ const MAP_FOCUS_ZOOM = 18;
 const SEARCH_DEBOUNCE_MS = 400;
 const MIN_SEARCH_CHARS = 2;
 
+function toLatLngLiteral(latLng) {
+  if (!latLng) return null;
+  if (typeof latLng.lat === 'function') {
+    return { lat: latLng.lat(), lng: latLng.lng() };
+  }
+  const lat = Number(latLng.lat);
+  const lng = Number(latLng.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return null;
+  }
+  return { lat, lng };
+}
+
+function formatGeocodeAddress(result) {
+  if (!result) return '';
+  if (result.formatted_address) return result.formatted_address;
+  if (result.formattedAddress) return result.formattedAddress;
+  return '';
+}
+
 export function ProfileLocationField({ name = 'currentLocation' }) {
   const { control, setValue } = useFormContext();
   const { t, i18n } = useTranslate('profile');
@@ -49,6 +69,9 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
   const initialGeocodeDoneRef = useRef(false);
   const syncedAddressRef = useRef('');
   const skipNextSearchRef = useRef(false);
+  const mapsApiRef = useRef(null);
+  const ignoreBlurGeocodeRef = useRef(false);
+  const fieldOnChangeRef = useRef(null);
 
   const [mapsReady, setMapsReady] = useState(false);
   const [mapsError, setMapsError] = useState(null);
@@ -59,45 +82,100 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
 
   const locationValue = useWatch({ control, name });
 
-  const setMarkerPosition = useCallback((maps, position) => {
-    if (!mapRef.current || !position) return;
-
-    if (!markerRef.current) {
-      markerRef.current = new maps.Marker({
-        map: mapRef.current,
-        position,
-        draggable: true,
-      });
-
-      markerRef.current.addListener('dragend', () => {
-        const latLng = markerRef.current.getPosition();
-        if (!latLng || !geocoderRef.current) return;
-        geocoderRef.current.geocode({ location: latLng }, (results, status) => {
-          if (status === 'OK' && results?.[0]) {
-            const addr = results[0].formatted_address;
-            syncedAddressRef.current = addr;
-            skipNextSearchRef.current = true;
-            setValue(name, addr, { shouldDirty: true });
-            setSuggestionsOpen(false);
-          }
-        });
-      });
-    } else {
-      markerRef.current.setPosition(position);
-    }
-
-    mapRef.current.panTo(position);
-    if (mapRef.current.getZoom() < MAP_FOCUS_ZOOM) {
-      mapRef.current.setZoom(MAP_FOCUS_ZOOM);
-    }
-  }, [name, setValue]);
-
-  const geocodeRequestBase = useCallback(
-    () => ({
+  const geocodeRequestBase = useCallback(() => {
+    const regionCode =
+      mapLocale.regionCodes?.[0] || String(mapLocale.region || '').toLowerCase() || undefined;
+    return {
       language: mapLocale.language,
-      region: mapLocale.region,
-    }),
-    [mapLocale.language, mapLocale.region]
+      ...(regionCode ? { region: regionCode } : {}),
+    };
+  }, [mapLocale.language, mapLocale.region, mapLocale.regionCodes]);
+
+  const commitLocationAddress = useCallback(
+    (addr) => {
+      const trimmed = addr?.trim();
+      if (!trimmed) return;
+
+      syncedAddressRef.current = trimmed;
+      skipNextSearchRef.current = true;
+      fieldOnChangeRef.current?.(trimmed);
+      setValue(name, trimmed, { shouldDirty: true, shouldTouch: true });
+      setSuggestionsOpen(false);
+    },
+    [name, setValue]
+  );
+
+  const reverseGeocodeAt = useCallback(
+    async (latLng) => {
+      const location = toLatLngLiteral(latLng);
+      if (!location) return;
+
+      try {
+        await loadGoogleMaps();
+        const { Geocoder } = await window.google.maps.importLibrary('geocoding');
+        if (!geocoderRef.current) {
+          geocoderRef.current = new Geocoder();
+        }
+
+        const request = { ...geocodeRequestBase(), location };
+
+        let results;
+        try {
+          const response = await geocoderRef.current.geocode(request);
+          results = response?.results;
+        } catch {
+          results = await new Promise((resolve, reject) => {
+            geocoderRef.current.geocode(request, (legacyResults, status) => {
+              if (status === 'OK' && legacyResults?.length) {
+                resolve(legacyResults);
+              } else {
+                reject(new Error(status || 'GEOCODE_FAILED'));
+              }
+            });
+          });
+        }
+
+        const addr = formatGeocodeAddress(results?.[0]);
+        if (!addr) {
+          enqueueSnackbar(m('locationGeocodeFail'), { variant: 'warning' });
+          return;
+        }
+
+        commitLocationAddress(addr);
+      } catch {
+        enqueueSnackbar(m('locationGeocodeFail'), { variant: 'warning' });
+      }
+    },
+    [commitLocationAddress, geocodeRequestBase, m]
+  );
+
+  const setMarkerPosition = useCallback(
+    (maps, position) => {
+      if (!mapRef.current || !position) return;
+
+      if (!markerRef.current) {
+        markerRef.current = new maps.Marker({
+          map: mapRef.current,
+          position,
+          draggable: true,
+        });
+
+        markerRef.current.addListener('dragend', () => {
+          const latLng = markerRef.current?.getPosition();
+          if (!latLng) return;
+          reverseGeocodeAt(latLng);
+        });
+      } else {
+        markerRef.current.setMap(mapRef.current);
+        markerRef.current.setPosition(position);
+      }
+
+      mapRef.current.panTo(position);
+      if (mapRef.current.getZoom() < MAP_FOCUS_ZOOM) {
+        mapRef.current.setZoom(MAP_FOCUS_ZOOM);
+      }
+    },
+    [reverseGeocodeAt]
   );
 
   const applyAddress = useCallback(
@@ -296,6 +374,7 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
         if (cancelled) return;
 
         geocoderRef.current = new maps.Geocoder();
+        mapsApiRef.current = maps;
 
         const defaultCenter = getDefaultMapCenter(i18n.resolvedLanguage);
 
@@ -305,6 +384,7 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: false,
+          clickableIcons: false,
         });
 
         recenterMap(mapRef.current, defaultCenter);
@@ -349,6 +429,29 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
   }, [mapsReady, locationValue, applyAddress]);
 
   useEffect(() => {
+    if (!mapsReady || !mapRef.current) {
+      return undefined;
+    }
+
+    const maps = mapsApiRef.current;
+    if (!maps) {
+      return undefined;
+    }
+
+    const listener = mapRef.current.addListener('click', (event) => {
+      const latLng = event.latLng;
+      if (!latLng) return;
+      ignoreBlurGeocodeRef.current = true;
+      setMarkerPosition(maps, latLng);
+      reverseGeocodeAt(latLng);
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, [mapsReady, reverseGeocodeAt, setMarkerPosition]);
+
+  useEffect(() => {
     return () => {
       if (searchDebounceRef.current) {
         clearTimeout(searchDebounceRef.current);
@@ -374,18 +477,7 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
           };
 
           setMarkerPosition(maps, latLng);
-
-          if (geocoderRef.current) {
-            geocoderRef.current.geocode({ location: latLng }, (results, status) => {
-              if (status === 'OK' && results?.[0]) {
-                const addr = results[0].formatted_address;
-                syncedAddressRef.current = addr;
-                skipNextSearchRef.current = true;
-                setValue(name, addr, { shouldDirty: true });
-                setSuggestionsOpen(false);
-              }
-            });
-          }
+          await reverseGeocodeAt(latLng);
         } catch (error) {
           enqueueSnackbar(error?.message || m('mapLoadFail'), { variant: 'error' });
         } finally {
@@ -414,6 +506,8 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => {
+          fieldOnChangeRef.current = field.onChange;
+
           const { textFieldProps, sx, slotProps } = splitTextFieldProps({
             fullWidth: true,
             label: l('currentLocation'),
@@ -455,10 +549,19 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
                   window.setTimeout(() => {
                     setSuggestionsOpen(false);
                   }, 180);
-                  if (mapsReady && event.target.value?.trim()) {
-                    syncedAddressRef.current = event.target.value;
-                    loadGoogleMaps().then((maps) => applyAddress(maps, event.target.value));
+
+                  if (ignoreBlurGeocodeRef.current) {
+                    ignoreBlurGeocodeRef.current = false;
+                    return;
                   }
+
+                  const next = event.target.value?.trim();
+                  if (!mapsReady || !next || next === syncedAddressRef.current) {
+                    return;
+                  }
+
+                  syncedAddressRef.current = next;
+                  loadGoogleMaps().then((maps) => applyAddress(maps, next));
                 }}
                 slotProps={{
                   ...slotProps,
@@ -550,7 +653,13 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
             bgcolor: 'action.hover',
           }}
         >
-          <Box ref={setMapContainer} sx={{ width: 1, height: 1 }} />
+          <Box
+            ref={setMapContainer}
+            sx={{ width: 1, height: 1 }}
+            onPointerDown={() => {
+              ignoreBlurGeocodeRef.current = true;
+            }}
+          />
           {!mapsReady && (
             <Box
               sx={{
@@ -563,6 +672,26 @@ export function ProfileLocationField({ name = 'currentLocation' }) {
               }}
             >
               <CircularProgress size={28} />
+            </Box>
+          )}
+          {mapsReady && (
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 8,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                px: 1.25,
+                py: 0.5,
+                borderRadius: 1,
+                typography: 'caption',
+                color: 'text.secondary',
+                bgcolor: 'background.paper',
+                boxShadow: 1,
+                pointerEvents: 'none',
+              }}
+            >
+              {l('locationMapHint')}
             </Box>
           )}
         </Box>

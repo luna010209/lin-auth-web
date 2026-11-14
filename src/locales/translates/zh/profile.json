@@ -16,7 +16,8 @@
     "maritalStatus": "婚姻状况",
     "currentLocation": "当前位置",
     "locationSearchPlaceholder": "搜索地址或地点",
-    "locationSearchHelper": "搜索或使用当前位置，将以文本保存到资料。",
+    "locationSearchHelper": "搜索、点击地图放置图钉，或使用 GPS。完整地址显示在上方输入框。",
+    "locationMapHint": "点击地图设置图钉 · 拖动图钉可调整",
     "useMyLocation": "使用我的位置",
     "visibilityPublic": "公开",
     "visibilityPrivate": "仅自己",
@@ -46,6 +47,7 @@
     "mapLoadFail": "无法加载 Google Maps。请检查 API 密钥和已启用的 API。",
     "mapKeyMissing": "请设置 VITE_GOOGLE_MAPS_API_KEY 以显示地图。",
     "locationDenied": "未授予位置权限，请允许或手动搜索。",
-    "locationUnsupported": "此浏览器不支持定位。"
+    "locationUnsupported": "此浏览器不支持定位。",
+    "locationGeocodeFail": "无法解析该位置的地址。请确认 API 密钥已启用 Geocoding API。"
   }
 }

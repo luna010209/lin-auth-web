@@ -38,7 +38,6 @@ const createSchema = zod.object({
   displayName: zod.string().max(150).optional(),
   headline: zod.string().max(255).optional(),
   bio: zod.string().max(5000).optional(),
-  location: zod.string().max(150).optional(),
   avatar: zod
     .custom((value) => value == null || value instanceof File, {
       message: 'Invalid avatar file',
@@ -69,7 +68,6 @@ export function PersonaManageView() {
       displayName: '',
       headline: '',
       bio: '',
-      location: '',
       avatar: null,
     },
   });
@@ -79,11 +77,10 @@ export function PersonaManageView() {
       displayName: user?.displayName?.trim() || '',
       headline: '',
       bio: '',
-      location: user?.currentLocation?.trim() || '',
       avatar: null,
     });
     setCreateOpen(true);
-  }, [methods, user?.currentLocation, user?.displayName]);
+  }, [methods, user?.displayName]);
 
   const loadPersonas = useCallback(async () => {
     try {
@@ -133,7 +130,6 @@ export function PersonaManageView() {
       { field: 'id', headerName: 'ID', width: 80 },
       { field: 'displayName', headerName: l('displayName'), flex: 1, minWidth: 140 },
       { field: 'headline', headerName: l('headline'), flex: 1, minWidth: 160 },
-      { field: 'location', headerName: l('location'), flex: 1, minWidth: 120 },
       {
         field: 'createdAt',
         headerName: l('createdAt'),
@@ -171,7 +167,6 @@ export function PersonaManageView() {
       displayName: data.displayName?.trim() || null,
       headline: data.headline?.trim() || null,
       bio: data.bio?.trim() || null,
-      location: data.location?.trim() || null,
       ...(avatarBytes ? { avatar: avatarBytes } : {}),
     };
 
@@ -290,7 +285,6 @@ export function PersonaManageView() {
 
             <Field.Text name="displayName" label={l('displayName')} />
             <Field.Text name="headline" label={l('headline')} />
-            <Field.Text name="location" label={l('location')} />
             <Field.Text name="bio" label={l('bio')} multiline rows={4} />
           </DialogContent>
           <DialogActions>

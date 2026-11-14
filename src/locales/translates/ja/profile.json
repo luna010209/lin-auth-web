@@ -16,7 +16,8 @@
     "maritalStatus": "婚姻状況",
     "currentLocation": "現在地",
     "locationSearchPlaceholder": "住所または場所を検索",
-    "locationSearchHelper": "検索するか現在地を使用します。プロフィールにテキストで保存されます。",
+    "locationSearchHelper": "検索、地図をクリックしてピンを置く、またはGPSを使用。完全な住所が上の欄に表示されます。",
+    "locationMapHint": "地図をクリックしてピンを設定 · ドラッグで調整",
     "useMyLocation": "現在地を使う",
     "visibilityPublic": "公開",
     "visibilityPrivate": "自分のみ",
@@ -46,6 +47,7 @@
     "mapLoadFail": "Google Maps を読み込めませんでした。API キーと有効な API を確認してください。",
     "mapKeyMissing": "地図を表示するには VITE_GOOGLE_MAPS_API_KEY を設定してください。",
     "locationDenied": "位置情報の許可がありません。許可するか手動で検索してください。",
-    "locationUnsupported": "このブラウザは位置情報に対応していません。"
+    "locationUnsupported": "このブラウザは位置情報に対応していません。",
+    "locationGeocodeFail": "この地点の住所を取得できませんでした。API キーで Geocoding API が有効か確認してください。"
   }
 }

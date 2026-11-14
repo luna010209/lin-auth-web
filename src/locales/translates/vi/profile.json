@@ -16,7 +16,8 @@
     "maritalStatus": "Tình trạng hôn nhân",
     "currentLocation": "Vị trí hiện tại",
     "locationSearchPlaceholder": "Tìm địa chỉ hoặc địa điểm",
-    "locationSearchHelper": "Tìm kiếm hoặc dùng vị trí hiện tại. Lưu vào thông tin tài khoản dưới dạng văn bản.",
+    "locationSearchHelper": "Tìm kiếm, nhấn trên bản đồ để ghim, hoặc dùng GPS. Địa chỉ đầy đủ hiện ở ô trên.",
+    "locationMapHint": "Nhấn bản đồ để đặt ghim · Kéo ghim để chỉnh",
     "useMyLocation": "Dùng vị trí của tôi",
     "visibilityPublic": "Hiển thị công khai",
     "visibilityPrivate": "Chỉ mình tôi",
@@ -46,6 +47,7 @@
     "mapLoadFail": "Không tải được Google Maps. Kiểm tra API key và các API đã bật.",
     "mapKeyMissing": "Thêm VITE_GOOGLE_MAPS_API_KEY để hiển thị bản đồ.",
     "locationDenied": "Chưa được phép truy cập vị trí. Cho phép hoặc tìm thủ công.",
-    "locationUnsupported": "Trình duyệt không hỗ trợ định vị."
+    "locationUnsupported": "Trình duyệt không hỗ trợ định vị.",
+    "locationGeocodeFail": "Không lấy được địa chỉ tại vị trí này. Kiểm tra Geocoding API đã bật cho API key."
   }
 }

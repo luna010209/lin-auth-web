@@ -16,7 +16,8 @@
     "maritalStatus": "Marital status",
     "currentLocation": "Current location",
     "locationSearchPlaceholder": "Search address or place",
-    "locationSearchHelper": "Search below or use your current location. Saved to your account information as text.",
+    "locationSearchHelper": "Search, click the map to drop a pin, or use GPS. The full address appears in the field above.",
+    "locationMapHint": "Click the map to set a pin · Drag the pin to adjust",
     "useMyLocation": "Use my location",
     "visibilityPublic": "Public",
     "visibilityPrivate": "Only me",
@@ -46,6 +47,7 @@
     "mapLoadFail": "Could not load Google Maps. Check your API key and enabled APIs.",
     "mapKeyMissing": "Add VITE_GOOGLE_MAPS_API_KEY to enable the map.",
     "locationDenied": "Location permission denied. Allow access or search manually.",
-    "locationUnsupported": "This browser does not support geolocation."
+    "locationUnsupported": "This browser does not support geolocation.",
+    "locationGeocodeFail": "Could not resolve an address for this point. Ensure the Geocoding API is enabled for your key."
   }
 }
